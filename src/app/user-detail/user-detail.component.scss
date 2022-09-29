@@ -1,0 +1,34 @@
+.user-detail-header {
+    min-height: 240px;
+    background-color: chocolate;
+    color: white; 
+    display: flex;
+    align-items: flex-end;
+
+    img {
+        height:  200px;
+        width: 150px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+
+}
+
+.user-details{
+    margin-left: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+
+    h2{
+        margin-bottom: 0;
+    }
+}
+
+.mat-icon-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

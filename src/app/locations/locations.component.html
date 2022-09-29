@@ -1,0 +1,26 @@
+<div class=" header">
+    <div>
+        <h2>Locations</h2>
+        <p>Click on a table row to see or edit Location details. </p>
+    </div>
+    <button mat-mini-fab color="primary" title="Add client" (click)="openAddLocation()" data-cy="addClient">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<mat-card>
+    <table class="user-table">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Beecolonys</th>
+        </tr>
+        <tr *ngFor="let locations of allLocations" [routerLink]= "['/location/' + locations.customIdName]">
+            <td>{{ locations.name }}</td>
+            <td>{{ locations.description }}</td>
+            <td>{{ locations.beecolonys }}</td>
+            <td><mat-icon (click)="openEditLocation()">create</mat-icon> </td>
+        </tr>
+
+    </table>  
+</mat-card>

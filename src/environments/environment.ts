@@ -3,6 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  firebase: {
+    apiKey: "AIzaSyDLJ7VOV1Kw4bbQeR4oNazDH-6sEfKHITo",
+    authDomain: "beehivecard.firebaseapp.com",
+    databaseURL: "https://beehivecard-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "beehivecard",
+    storageBucket: "beehivecard.appspot.com",
+    messagingSenderId: "261327934318",
+    appId: "1:261327934318:web:8d7c7e20112e6504c7677f"
+  },
   production: false
 };
 

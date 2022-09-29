@@ -1,0 +1,26 @@
+<div class=" header">
+    <div>
+        <h2>Beecolonys {{ locations.name }}</h2>
+        <p>Click on a table row to see or edit Beecolony details. </p>
+    </div>
+    <button (click)="openDialog()" class="add-user-btn" mat-fab color="primary" matTooltip="Beecolony user">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<mat-card>
+    <table class="beecolony-table">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Location</th>
+        </tr>
+        <tr *ngFor="let beecolony of allBeecolonys">     
+            
+            <td>{{ beecolony.name }}</td>
+            <td>{{ beecolony.description }}</td>
+            <td>{{ beecolony.group }}</td>
+            <td><mat-icon [routerLink]= "['/beecolony/' + locationId  +  beecolony.customIdName]">create</mat-icon> </td>
+        </tr>
+
+    </table>
+</mat-card>
