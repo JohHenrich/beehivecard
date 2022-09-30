@@ -1,0 +1,18 @@
+<mat-card class="mt-24">
+    <button mat-icon-button mat-button class="mat-icon-button" [matMenuTriggerFor]="addressMenu"
+        aria-label="Menue">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #addressMenu="matMenu">
+        <button mat-menu-item (click)="addTask()">Edit Entries</button>
+        <button mat-menu-item>Delete user</button>
+    </mat-menu>
+
+    <mat-card-title>Entries</mat-card-title>
+
+    <mat-card-content>
+        {{ entries.date }} {{ entries.description }}
+     
+    </mat-card-content>
+
+</mat-card>

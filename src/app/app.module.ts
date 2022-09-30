@@ -38,6 +38,8 @@ import { BeecolonysComponent } from './beecolonys/beecolonys.component';
 import { DialogEditLocationComponent } from './dialog-edit-location/dialog-edit-location.component';
 import { EditLocationComponent } from './edit-location/edit-location.component';
 import { BeecolonyDetailComponent } from './beecolony-detail/beecolony-detail.component';
+import { DialogEditBeecolonyComponent } from './dialog-edit-beecolony/dialog-edit-beecolony.component';
+import { EntrieCardComponent } from './entrie-card/entrie-card.component';
 
 
 
@@ -56,7 +58,9 @@ import { BeecolonyDetailComponent } from './beecolony-detail/beecolony-detail.co
     BeecolonysComponent,
     DialogEditLocationComponent,
     EditLocationComponent,
-    BeecolonyDetailComponent
+    BeecolonyDetailComponent,
+    DialogEditBeecolonyComponent,
+    EntrieCardComponent
   ],
   imports: [
     BrowserModule,

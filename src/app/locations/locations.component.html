@@ -15,11 +15,11 @@
             <th>Description</th>
             <th>Beecolonys</th>
         </tr>
-        <tr *ngFor="let locations of allLocations" [routerLink]= "['/location/' + locations.customIdName]">
-            <td>{{ locations.name }}</td>
-            <td>{{ locations.description }}</td>
+        <tr *ngFor="let locations of allLocations" >
+            <td [routerLink]= "['/location/' + locations.customIdName]">{{ locations.name }}</td>
+            <td [routerLink]= "['/location/' + locations.customIdName]">{{ locations.description }}</td>
             <td>{{ locations.beecolonys }}</td>
-            <td><mat-icon (click)="openEditLocation()">create</mat-icon> </td>
+            
         </tr>
 
     </table>  

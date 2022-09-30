@@ -11,8 +11,6 @@ export class User{
 
     constructor(obj?: any){
 
-    
-
         this.firstName = obj? obj.firstName : '';
         this.lastName = obj? obj.lastName : '';
         this.eMail = obj? obj.eMail : '';

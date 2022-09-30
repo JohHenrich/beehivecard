@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddBeecolonyComponent } from '../dialog-add-beecolony/dialog-add-beecolony.component';
+import { DialogEditLocationComponent } from '../dialog-edit-location/dialog-edit-location.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Locations } from 'src/models/location.class';
 import { Beecolony } from 'src/models/beecolony.class';
@@ -37,7 +38,6 @@ export class BeecolonysComponent implements OnInit {
       .subscribe((beecolony: any) => {
         console.log(beecolony);
         this.allBeecolonys = beecolony;
-        console.log('Name:', this.allBeecolonys[0].name);
       })
 
 
@@ -47,7 +47,7 @@ export class BeecolonysComponent implements OnInit {
       .collection('locations')
       .doc(this.locationId)
       .valueChanges()
-      .subscribe((locations: any) => {
+      .subscribe((locations: Locations) => {
         this.locations = new Locations(locations);
       })
     console.log('Name:', this.locations)
@@ -61,20 +61,20 @@ export class BeecolonysComponent implements OnInit {
       .collection('beecolonys')
       .valueChanges({ idField: 'customIdName' })
       .subscribe((changes: any) => {
-        console.log(changes);
+        console.log('Beecolony',changes);
         //this.allUsers = changes;
       })
   }
 
-  openDialog() {
+  openAddDialog() {
     const dialog = this.dialog.open(DialogAddBeecolonyComponent);
     //dialog.componentInstance.locations[this.locationId] = new Locations(this.locations[this.locationId].beecolonys[this.allBeecolonys.length].toJSON);
     dialog.componentInstance.locationId = this.locationId;
 
   }
   openEditDialog() {
-    const dialog = this.dialog.open(DialogAddBeecolonyComponent);
-    dialog.componentInstance.locations[this.locationId] = new Locations(this.locations[this.locationId].beecolonys[this.allBeecolonys.length].toJSON);
+    const dialog = this.dialog.open(DialogEditLocationComponent);
+    dialog.componentInstance.locations = this.locations;
     dialog.componentInstance.locationId = this.locationId;
   }
 }

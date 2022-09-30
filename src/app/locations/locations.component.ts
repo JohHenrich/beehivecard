@@ -38,7 +38,5 @@ export class LocationsComponent implements OnInit {
   openAddLocation() {
     this.dialog.open( DialogAddLocationComponent );
   }
-  openEditLocation() {
-    this.dialog.open( DialogEditLocationComponent );
-  }
+
 }

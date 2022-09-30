@@ -1,1 +1,18 @@
-<p>beecolony-detail works!</p>
+<mat-card class="beecolony-detail-header">
+    <button mat-icon-button mat-button class="mat-icon-button" [matMenuTriggerFor]="userMenu" aria-label="Menue">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="editBeecolony()">Edit beecolony</button>
+        <button mat-menu-item>Delete beecolony</button>
+    </mat-menu>
+
+    <img mat-card-avatar src="./assets/img/beecolony.png">
+    <div class="beecolony-details">
+        <h2>{{ beecolony.name }} <br>{{ beecolony.description}}</h2>
+        {{ beecolony.position }}
+
+    </div>
+
+</mat-card>
+<app-entrie-card [entries]="entries"></app-entrie-card>

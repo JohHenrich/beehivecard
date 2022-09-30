@@ -12,14 +12,13 @@ export class Locations{
         this.description = obj? obj.description : '';
         this.beecolonys = obj? obj.beecolonys : [];
 
-
     }
 
     public toJSON(){
         return{
             name: this.name,
             description: this.description,
-            beecolonys: this.beecolonys,
+            //beecolonys: this.beecolonys,
         }
     }
 

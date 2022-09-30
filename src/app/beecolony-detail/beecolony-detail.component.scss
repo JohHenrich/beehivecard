@@ -1,0 +1,34 @@
+.beecolony-detail-header {
+    min-height: 150px;
+    background-color: chocolate;
+    color: white; 
+    display: flex;
+    align-items: flex-end;
+
+    img {
+        height:  150px;
+        width: 100px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+
+}
+
+.beecolony-details{
+    margin-left: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content: center;
+    height: 200px;
+
+    h2{
+        margin-bottom: 0;
+    }
+}
+
+.mat-icon-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

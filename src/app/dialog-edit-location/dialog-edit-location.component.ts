@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Locations } from 'src/models/location.class';
 
 @Component({
@@ -11,28 +11,17 @@ import { Locations } from 'src/models/location.class';
 })
 export class DialogEditLocationComponent implements OnInit {
   locationId = '';
-  locations: Locations  = new Locations();
-  
+  locations: any = '';
+
   birthDate!: Date;
   loading = false;
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogEditLocationComponent>, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(paramMap => {
-      this.locationId = paramMap.get('id');
-      this.getLocation();
-    })
+    console.log(this.locations);
   }
-  getLocation() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .valueChanges()
-      .subscribe((locations: any) => {
-        this.locations = new Locations(this.locations);
-      })
-  }
+
 
   saveLocation() {
     this.loading = true;
@@ -42,12 +31,14 @@ export class DialogEditLocationComponent implements OnInit {
 
     this.firestore
       .collection('locations')
-      .add(this.locations.toJSON())
+      .doc(this.locationId)
+      .update(this.locations.toJSON())
       .then((result: any) => {
         console.log('Adding user finished', result);
         this.loading = false;
         this.dialogRef.close();
       });
-   
+
+
   }
 }
