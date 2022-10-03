@@ -11,8 +11,16 @@
     <div class="beecolony-details">
         <h2>{{ beecolony.name }} <br>{{ beecolony.description}}</h2>
         {{ beecolony.position }}
-
     </div>
 
 </mat-card>
-<app-entrie-card [entries]="entries"></app-entrie-card>
+<mat-card>
+    <mat-card-title>Entries</mat-card-title>
+
+    <div *ngFor="let entrie of allEntries">
+        <app-entrie-card [entrie]="entrie"></app-entrie-card>
+    </div>
+</mat-card>
+<button (click)="openDialogAddEnrie()" class="add-entrie-btn" mat-fab color="primary" matTooltip="Add entrie">
+    <mat-icon>add</mat-icon>
+</button>

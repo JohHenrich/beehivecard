@@ -40,6 +40,9 @@ import { EditLocationComponent } from './edit-location/edit-location.component';
 import { BeecolonyDetailComponent } from './beecolony-detail/beecolony-detail.component';
 import { DialogEditBeecolonyComponent } from './dialog-edit-beecolony/dialog-edit-beecolony.component';
 import { EntrieCardComponent } from './entrie-card/entrie-card.component';
+import { DialogAddEntrieComponent } from './dialog-add-entrie/dialog-add-entrie.component';
+import { TaskCardComponent } from './task-card/task-card.component';
+import { EntrieEditComponent } from './entrie-edit/entrie-edit.component';
 
 
 
@@ -60,7 +63,10 @@ import { EntrieCardComponent } from './entrie-card/entrie-card.component';
     EditLocationComponent,
     BeecolonyDetailComponent,
     DialogEditBeecolonyComponent,
-    EntrieCardComponent
+    EntrieCardComponent,
+    DialogAddEntrieComponent,
+    TaskCardComponent,
+    EntrieEditComponent
   ],
   imports: [
     BrowserModule,

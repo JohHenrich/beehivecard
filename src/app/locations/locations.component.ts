@@ -15,7 +15,6 @@ import { DialogEditLocationComponent } from '../dialog-edit-location/dialog-edit
 })
 export class LocationsComponent implements OnInit {
 
-
   user: User = new User();
   allUsers = [];
 

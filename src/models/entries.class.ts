@@ -1,7 +1,7 @@
 import {Task} from "./task.class";
 
 export class Entries{
-    date: string;
+    date: Number;
     description: string;
     task: Task[];
     
@@ -17,7 +17,6 @@ export class Entries{
         return{
             date: this.date,
             description: this.description,
-            task: this. task,
         }
     }
 

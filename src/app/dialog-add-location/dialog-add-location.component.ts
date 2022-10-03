@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { User } from 'src/models/user.class';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Locations } from 'src/models/location.class';
 
@@ -10,7 +9,6 @@ import { Locations } from 'src/models/location.class';
   styleUrls: ['./dialog-add-location.component.scss']
 })
 export class DialogAddLocationComponent implements OnInit {
-  user = new User();
   locations = new Locations();
   
   birthDate!: Date;

@@ -19,7 +19,7 @@ export class DialogEditBeecolonyComponent implements OnInit {
   constructor(private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogEditBeecolonyComponent>) { }
 
   ngOnInit(): void {
-    //this.birthDate.setDate( Number(this.beecolony.birthDate) );
+
     this.birthDate = new Date(Number(this.beecolony.birthDate));
   }
 

@@ -4,14 +4,18 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #addressMenu="matMenu">
-        <button mat-menu-item (click)="addTask()">Edit Entries</button>
-        <button mat-menu-item>Delete user</button>
+        <button mat-menu-item [routerLink]= "['/entrie/' + locationId  +  beecolonyId + entriesId]">Edit entrie</button>
+        <button mat-menu-item>Delete entrie</button>
     </mat-menu>
 
-    <mat-card-title>Entries</mat-card-title>
 
     <mat-card-content>
-        {{ entries.date }} {{ entries.description }}
+        {{ entrieDate | date:'dd/MM/yy'}} {{ entrie.description }}
+        <div *ngFor="let task of allTasks">
+        
+            <app-task-card [task]="task"></app-task-card>
+            
+        </div>
      
     </mat-card-content>
 

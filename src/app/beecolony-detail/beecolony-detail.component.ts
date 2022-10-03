@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Locations } from 'src/models/location.class';
 import { Beecolony } from 'src/models/beecolony.class';
 import { Entries } from 'src/models/entries.class';
 import { DialogEditBeecolonyComponent } from '../dialog-edit-beecolony/dialog-edit-beecolony.component';
-import { EntrieCardComponent } from '../entrie-card/entrie-card.component';
+import { DialogAddEntrieComponent } from '../dialog-add-entrie/dialog-add-entrie.component';
 
 @Component({
   selector: 'app-beecolony-detail',
@@ -21,7 +20,8 @@ export class BeecolonyDetailComponent implements OnInit {
   locationId = '';
   beecolonyId = '';
   entries: Entries = new Entries();
-
+  allEntries = [];
+ 
   allBeecolonys = [];
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
@@ -47,7 +47,8 @@ export class BeecolonyDetailComponent implements OnInit {
 
       })
       this.getBecolony();
-
+      this.getEntries();
+  
   }
 
 
@@ -66,6 +67,24 @@ export class BeecolonyDetailComponent implements OnInit {
     //console.log('Name:', this.locations)
   }
 
+  getEntries() {
+    this.firestore
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .valueChanges()
+      .subscribe((entries: any) => {
+        console.log(entries);
+        this.entries = new Entries(entries) ;
+        this.allEntries = entries;
+        console.log('Entries Des.:', this.entries.description);
+      })
+    //console.log('Name:', this.locations)
+  }
+
+
 
   editBeecolony() {
     const dialog = this.dialog.open(DialogEditBeecolonyComponent);
@@ -74,11 +93,11 @@ export class BeecolonyDetailComponent implements OnInit {
     dialog.componentInstance.locationId = this.locationId;
   }
 
-  addTask() {
-    /*
-    const dialog = this.dialog.open(DialogEditUserComponent);
-    dialog.componentInstance.beecolony = new Beecolony(this.beecolony.toJSON());
+  openDialogAddEnrie() {
+    const dialog = this.dialog.open(DialogAddEntrieComponent);
+    dialog.componentInstance.entrie = new Entries (this.entries.toJSON());   
+    dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.beecolonyId = this.beecolonyId;
-    */
+    
   }
 }
