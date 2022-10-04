@@ -21,7 +21,7 @@ export class BeecolonyDetailComponent implements OnInit {
   beecolonyId = '';
   entries: Entries = new Entries();
   allEntries = [];
- 
+
   allBeecolonys = [];
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
@@ -29,11 +29,11 @@ export class BeecolonyDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
       this.beecolonyId = paramMap.get('id');
-      this.beecolonyId = this.beecolonyId.slice(20,40);
+      this.beecolonyId = this.beecolonyId.slice(20, 40);
       this.locationId = paramMap.get('id');
-      this.locationId =  this.locationId.slice(0,20);
+      this.locationId = this.locationId.slice(0, 20);
     })
-    
+
 
     this.firestore
       .collection('locations')
@@ -42,13 +42,13 @@ export class BeecolonyDetailComponent implements OnInit {
       .doc(this.beecolonyId)
       .valueChanges({ idField: 'customIdName' })
       .subscribe((beecolony: any) => {
-        console.log('ID: ', beecolony);
+        console.log('allBeecolonys: ', beecolony);
         this.allBeecolonys = beecolony;
 
       })
-      this.getBecolony();
-      this.getEntries();
-  
+    this.getBecolony();
+    this.getEntries();
+
   }
 
 
@@ -61,7 +61,7 @@ export class BeecolonyDetailComponent implements OnInit {
       .valueChanges()
       .subscribe((beecolony: any) => {
         console.log(beecolony);
-        this.beecolony = new Beecolony(beecolony) ;
+        this.beecolony = new Beecolony(beecolony);
         console.log('Name:', this.beecolony.name);
       })
     //console.log('Name:', this.locations)
@@ -77,9 +77,21 @@ export class BeecolonyDetailComponent implements OnInit {
       .valueChanges()
       .subscribe((entries: any) => {
         console.log(entries);
-        this.entries = new Entries(entries) ;
+        this.entries = new Entries(entries);
+        console.log('Entries Des.:', this.entries);
+      })
+
+    this.firestore
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((entries: any) => {
+     
         this.allEntries = entries;
-        console.log('Entries Des.:', this.entries.description);
+        console.log('allEntries:', this.allEntries);
       })
     //console.log('Name:', this.locations)
   }
@@ -88,16 +100,16 @@ export class BeecolonyDetailComponent implements OnInit {
 
   editBeecolony() {
     const dialog = this.dialog.open(DialogEditBeecolonyComponent);
-    dialog.componentInstance.beecolony = new Beecolony (this.beecolony.toJSON());   
+    dialog.componentInstance.beecolony = new Beecolony(this.beecolony.toJSON());
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
   }
 
   openDialogAddEnrie() {
     const dialog = this.dialog.open(DialogAddEntrieComponent);
-    dialog.componentInstance.entrie = new Entries (this.entries.toJSON());   
+    dialog.componentInstance.entrie = new Entries(this.entries.toJSON());
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.beecolonyId = this.beecolonyId;
-    
+
   }
 }

@@ -18,7 +18,7 @@
     <mat-card-title>Entries</mat-card-title>
 
     <div *ngFor="let entrie of allEntries">
-        <app-entrie-card [entrie]="entrie"></app-entrie-card>
+        <app-entrie-card [entrieId]="entrie.customIdName"></app-entrie-card>
     </div>
 </mat-card>
 <button (click)="openDialogAddEnrie()" class="add-entrie-btn" mat-fab color="primary" matTooltip="Add entrie">

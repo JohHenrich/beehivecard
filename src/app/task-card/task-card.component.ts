@@ -9,15 +9,15 @@ import { Task } from 'src/models/task.class';
   styleUrls: ['./task-card.component.scss']
 })
 export class TaskCardComponent implements OnInit {
+
   @Input()
-  task= new Task() ;
   allTasks = [];
 
 
   constructor(public dialog: MatDialog, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
-    //this.allTasks = new Task(this.task);
+    //this.allTasks = new Task(this.task.toJSON);
   }
 
 }

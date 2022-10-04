@@ -4,7 +4,7 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #addressMenu="matMenu">
-        <button mat-menu-item [routerLink]= "['/entrie/' + locationId  +  beecolonyId + entriesId]">Edit entrie</button>
+        <button mat-menu-item [routerLink]= "['/entrie/' + locationId  +  beecolonyId + entrieId]">Edit entrie</button>
         <button mat-menu-item>Delete entrie</button>
     </mat-menu>
 
@@ -13,7 +13,7 @@
         {{ entrieDate | date:'dd/MM/yy'}} {{ entrie.description }}
         <div *ngFor="let task of allTasks">
         
-            <app-task-card [task]="task"></app-task-card>
+            <app-task-card [allTasks]="task"></app-task-card>
             
         </div>
      

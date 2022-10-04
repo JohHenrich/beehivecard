@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Entries } from 'src/models/entries.class';
 
 @Component({
@@ -10,6 +10,7 @@ import { Entries } from 'src/models/entries.class';
 })
 export class DialogAddEntrieComponent implements OnInit {
   entrie = new Entries();
+  allEntries =[]; ///
   entrieDate!: Date;
   loading = false;
   locationId = '';
@@ -37,6 +38,20 @@ export class DialogAddEntrieComponent implements OnInit {
         this.loading = false;
         this.dialogRef.close();
       });
-   
+
+
+ ///
+
+    this.firestore
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((tasks: any) => {
+        console.log('AllTasks', tasks);
+       this.allEntries = tasks.customIdName
+      });
   }
 }

@@ -12,14 +12,14 @@ import { Task } from 'src/models/task.class';
 })
 export class EntrieCardComponent implements OnInit {
   @Input()
+  entrieId  = '';
   entrie= new Entries() ;
-  entriesId  = '';
-  allEntries =[];
-  locationId = '';
-  task = new Task();
-  allTasks =[];
-  beecolonyId = '';
   entrieDate: Date;
+  
+  allTasks =[];
+  locationId = '';
+  beecolonyId = '';
+ 
   
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
@@ -41,12 +41,12 @@ export class EntrieCardComponent implements OnInit {
       .collection('beecolonys')
       .doc(this.beecolonyId)
       .collection('entries')
-      .doc(this.entriesId)
+      .doc(this.entrieId)
+      .collection('tasks')
       .valueChanges({ idField: 'customIdName' })
       .subscribe((tasks: any) => {
-        console.log('ID: ', tasks);
         this.allTasks = tasks;
-       
+        console.log('allTasks: ', this.allTasks);
       })
 
     
