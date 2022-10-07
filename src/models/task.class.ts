@@ -1,23 +1,23 @@
-export class Task{
+export class Task {
     header: string;
-    description: string;
+    type: string;
     amount: number;
     unit: string;
-    
-    constructor(obj?: any){
 
-        this.header = obj? obj.header : '';
-        this.description = obj? obj.description : '';
-        this.amount = obj? obj.amount : '';
-        this.unit = obj? obj.unit : '';
+    constructor(obj?: any) {
+
+        this.header = obj ? obj.header : '';
+        this.type = obj ? obj.type : '';
+        this.amount = obj ? obj.amount : '';
+        this.unit = obj ? obj.unit : '';
     }
 
 
-    public toJSON(){
-        
-        return{
+    public toJSON() {
+
+        return {
             header: this.header,
-            description: this.description,
+            type: this.type,
             amount: this.amount,
             unit: this.unit,
         }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogFoodTaskComponent } from './dialog-food-task/dialog-food-task.component';
 
 
 
@@ -8,5 +10,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'simple-crm';
+  title = 'simple-Beehivecard';
+  constructor(public dialog: MatDialog) {
+  }
+
+  openDialogFoodTask(){
+    this.dialog.open(DialogFoodTaskComponent);
+  }
 }

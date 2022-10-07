@@ -5,6 +5,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Entries } from 'src/models/entries.class';
 import { Task } from 'src/models/task.class';
 
+
+
 @Component({
   selector: 'app-entrie-card',
   templateUrl: './entrie-card.component.html',
@@ -48,11 +50,13 @@ export class EntrieCardComponent implements OnInit {
         this.allTasks = tasks;
         console.log('allTasks: ', this.allTasks);
       })
-
-    
-    
   
   }
+
+
+
+
+
   addTask() {
     /*
     const dialog = this.dialog.open(DialogEditUserComponent);

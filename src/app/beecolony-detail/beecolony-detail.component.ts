@@ -98,7 +98,7 @@ export class BeecolonyDetailComponent implements OnInit {
 
 
 
-  editBeecolony() {
+  openDialogEditBeecolony() {
     const dialog = this.dialog.open(DialogEditBeecolonyComponent);
     dialog.componentInstance.beecolony = new Beecolony(this.beecolony.toJSON());
     dialog.componentInstance.beecolonyId = this.beecolonyId;

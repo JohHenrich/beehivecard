@@ -23,8 +23,6 @@ export class DialogAddEntrieComponent implements OnInit {
   saveEntrie() {
     this.loading = true;
     this.entrie.date = this.entrieDate.getTime();
-    console.log(this.entrie.date);
-
 
     this.firestore
       .collection('locations')

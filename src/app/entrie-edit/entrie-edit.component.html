@@ -1,1 +1,27 @@
-<p>entrie-edit works!</p>
+<mat-card class="beecolony-detail-header">
+    <button mat-icon-button mat-button class="mat-icon-button" [matMenuTriggerFor]="beecolonyMenu" aria-label="Menue">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #beecolonyMenu="matMenu">
+        <button mat-menu-item >Edit beecolony</button>
+        <button mat-menu-item >Delete beecolony</button>
+    </mat-menu>
+
+    <img mat-card-avatar src="./assets/img/beecolony.png">
+    <div class="beecolony-details">
+        <h2>Name: {{ beecolony.name }} <br>Location: {{ beecolony.position }}</h2>
+
+    </div>
+
+</mat-card>
+
+<mat-card>
+    <mat-card-title>Entrie of</mat-card-title>
+    <div>
+        <h2>Datum: {{ entrieDate | date:'dd/MM/yy' }} </h2>
+    </div>
+</mat-card>
+
+<button class="add-entrie-btn" mat-fab color="primary" matTooltip="Add entrie" (click)="openDialogeAddTaskFood()">
+    <mat-icon>add</mat-icon>
+</button>

@@ -17,6 +17,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+
+
 import { FormsModule } from '@angular/forms';
 //import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -25,10 +28,11 @@ import { environment } from '../environments/environment';
 //import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 import { AngularFireModule } from '@angular/fire/compat';
-import { MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { MatMenuModule } from '@angular/material/menu';
+
 import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -42,6 +46,8 @@ import { EntrieCardComponent } from './entrie-card/entrie-card.component';
 import { DialogAddEntrieComponent } from './dialog-add-entrie/dialog-add-entrie.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { EntrieEditComponent } from './entrie-edit/entrie-edit.component';
+import { DialogTaskFoodComponent } from './dialog-task-feeding/dialog-task-feeding.component';
+import { DialogFoodTaskComponent } from './dialog-food-task/dialog-food-task.component';
 
 
 
@@ -64,7 +70,9 @@ import { EntrieEditComponent } from './entrie-edit/entrie-edit.component';
     EntrieCardComponent,
     DialogAddEntrieComponent,
     TaskCardComponent,
-    EntrieEditComponent
+    EntrieEditComponent,
+    DialogTaskFoodComponent,
+    DialogFoodTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +88,7 @@ import { EntrieEditComponent } from './entrie-edit/entrie-edit.component';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     //provideFirebaseApp(() => initializeApp(environment.firebase)),

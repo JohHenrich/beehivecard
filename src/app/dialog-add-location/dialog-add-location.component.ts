@@ -10,7 +10,6 @@ import { Locations } from 'src/models/location.class';
 })
 export class DialogAddLocationComponent implements OnInit {
   locations = new Locations();
-  
   birthDate!: Date;
   loading = false;
 
@@ -21,9 +20,7 @@ export class DialogAddLocationComponent implements OnInit {
 
   saveLocation() {
     this.loading = true;
-    //this.user.birthDate = this.birthDate.getTime();
     console.log(this.locations);
-
 
     this.firestore
       .collection('locations')
