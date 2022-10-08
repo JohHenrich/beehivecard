@@ -26,8 +26,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
      margin-top: 24px;
 }
 
+.mb-24{
+    margin-bottom: 24px;
+}
+
+.jc-sb{
+    justify-content: space-between;
+}
+
 .dialog-container{
     position: relative;
+    height: 100%; 
 
     mat-progress-bar{
         position: absolute;
@@ -38,3 +47,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 
 }
+
+

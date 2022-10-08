@@ -1,28 +1,35 @@
-<div class="dialog-container">
+<div>
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
     <h1 mat-dialog-title>Add Food</h1>
     <div mat-dialog-content>
         <div>
-            <tr>
+            <tr class="food-table">
                 <th>Avalible Food</th>
+                <th>Unit</th>
             </tr>
             <tr *ngFor="let taskFeed of taskFeeds">
                 <td>{{ taskFeed.food }}</td>
+                <td>{{ taskFeed.unit }}</td>
             </tr>
         </div>
         <div>
-            <mat-form-field appearance="outline">
-                <mat-label>New Food</mat-label>
-                <div class="d-flex">
-                    <input [(ngModel)]="newFood" matInput placeholder="New Food">
-                    <button mat-button (click)="this.saveNewFood()">Add</button>
-                </div>
-            </mat-form-field>
+        
+                <mat-form-field appearance="outline" class="input-food">
+                    <mat-label>New Food</mat-label>
+                    <input [(ngModel)]="newFood.food" matInput placeholder="New Food">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="input-unit">
+                    <mat-label>Unit</mat-label>
+                    <input [(ngModel)]="newFood.unit" matInput placeholder="Unit for new food">
+                </mat-form-field>
+           
+            <button mat-button (click)="this.saveNewFood()">Add</button>
         </div>
 
         <div mat-dialog-actions>
             <button mat-button (click)="this.dialogRef.close()">Cancel</button>
-            <button mat-button (click)="this.dialogRef.close()" cdkFocusInitial>Save</button>
+            <button mat-button (click)="this.saveNewFood()" cdkFocusInitial>Save</button>
         </div>
     </div>
