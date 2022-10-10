@@ -12,12 +12,12 @@ export class TaskCardComponent implements OnInit {
 
   @Input()
   allTasks = [];
-
+  currentTask = '';
 
   constructor(public dialog: MatDialog, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
-    //this.allTasks = new Task(this.task.toJSON);
+    this.currentTask = this.allTasks[0];
   }
 
 }

@@ -14,18 +14,18 @@
             </tr>
         </div>
         <div>
-        
-                <mat-form-field appearance="outline" class="input-food">
-                    <mat-label>New Food</mat-label>
-                    <input [(ngModel)]="newFood.food" matInput placeholder="New Food">
-                </mat-form-field>
 
-                <mat-form-field appearance="outline" class="input-unit">
-                    <mat-label>Unit</mat-label>
-                    <input [(ngModel)]="newFood.unit" matInput placeholder="Unit for new food">
-                </mat-form-field>
-           
-            <button mat-button (click)="this.saveNewFood()">Add</button>
+            <mat-form-field appearance="outline" class="input-food mr-16">
+                <mat-label>New Food</mat-label>
+                <input [(ngModel)]="newFood.food" matInput placeholder="New Food">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="input-unit">
+                <mat-label>Unit</mat-label>
+                <input [(ngModel)]="newFood.unit" matInput placeholder="Unit for new food">
+            </mat-form-field>
+
+
         </div>
 
         <div mat-dialog-actions>

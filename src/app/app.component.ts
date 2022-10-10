@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogFoodTaskComponent } from './dialog-food-task/dialog-food-task.component';
+import { DialogNewFoodComponent } from './dialog-new-food/dialog-new-food.component';
+import { DialogNewTreatmentComponent } from './dialog-new-treatment/dialog-new-treatment.component';
 
 
 
@@ -14,7 +15,11 @@ export class AppComponent {
   constructor(public dialog: MatDialog) {
   }
 
-  openDialogFoodTask(){
-    this.dialog.open(DialogFoodTaskComponent);
+  openDialogNewFood(){
+    this.dialog.open(DialogNewFoodComponent);
+  }
+  
+  openDialogNewTreatment(){
+    this.dialog.open(DialogNewTreatmentComponent);
   }
 }

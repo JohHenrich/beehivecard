@@ -47,8 +47,9 @@ import { DialogAddEntrieComponent } from './dialog-add-entrie/dialog-add-entrie.
 import { TaskCardComponent } from './task-card/task-card.component';
 import { EntrieEditComponent } from './entrie-edit/entrie-edit.component';
 import { DialogTaskFoodComponent } from './dialog-task-feeding/dialog-task-feeding.component';
-import { DialogFoodTaskComponent } from './dialog-food-task/dialog-food-task.component';
-
+import { DialogNewFoodComponent } from './dialog-new-food/dialog-new-food.component';
+import { DialogTaskTreatmentComponent } from './dialog-task-treatment/dialog-task-treatment.component';
+import { DialogNewTreatmentComponent } from './dialog-new-treatment/dialog-new-treatment.component';
 
 
 @NgModule({
@@ -72,7 +73,9 @@ import { DialogFoodTaskComponent } from './dialog-food-task/dialog-food-task.com
     TaskCardComponent,
     EntrieEditComponent,
     DialogTaskFoodComponent,
-    DialogFoodTaskComponent
+    DialogNewFoodComponent,
+    DialogTaskTreatmentComponent,
+    DialogNewTreatmentComponent
   ],
   imports: [
     BrowserModule,

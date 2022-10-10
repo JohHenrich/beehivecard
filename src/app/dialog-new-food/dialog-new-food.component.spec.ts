@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogFoodTaskComponent } from './dialog-food-task.component';
+import { DialogNewFoodComponent } from './dialog-new-food.component';
 
-describe('DialogFoodTaskComponent', () => {
-  let component: DialogFoodTaskComponent;
-  let fixture: ComponentFixture<DialogFoodTaskComponent>;
+describe('DialogFoodComponent', () => {
+  let component: DialogNewFoodComponent;
+  let fixture: ComponentFixture<DialogNewFoodComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogFoodTaskComponent ]
+      declarations: [ DialogNewFoodComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DialogFoodTaskComponent);
+    fixture = TestBed.createComponent(DialogNewFoodComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

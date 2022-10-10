@@ -21,7 +21,25 @@
         <h2>Datum: {{ entrieDate | date:'dd/MM/yy' }} </h2>
     </div>
 </mat-card>
+        
+<table class="table">
+    <tr>
+        <th>Task-type</th>
+        <th>Description</th>
+        <th>Amount</th>
+    </tr>
+    <tr *ngFor="let task of allTasks" >
+        <td>{{ task.header }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.amount }}{{ task.unit }}</td>
+    </tr>
 
-<button class="add-entrie-btn" mat-fab color="primary" matTooltip="Add entrie" (click)="openDialogeAddTaskFood()">
+</table>  
+
+<button class="add-feeding-btn" mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFood()">
+    <mat-icon>add</mat-icon>
+</button>
+
+<button class="add-treatment-btn" mat-fab color="primary" matTooltip="Add treatment" (click)="openDialogeAddTaskTreatment()">
     <mat-icon>add</mat-icon>
 </button>

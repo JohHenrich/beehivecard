@@ -4,15 +4,16 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
-import { TaskFeed } from 'src/models/taskFeed.class';
+import { TaskTreatment } from 'src/models/taskTreatment.class';
 import { MatSelectModule } from '@angular/material/select';
 
+
 @Component({
-  selector: 'app-dialog-task-feeding',
-  templateUrl: './dialog-task-feeding.component.html',
-  styleUrls: ['./dialog-task-feeding.component.scss']
+  selector: 'app-dialog-task-treatment',
+  templateUrl: './dialog-task-treatment.component.html',
+  styleUrls: ['./dialog-task-treatment.component.scss']
 })
-export class DialogTaskFoodComponent implements OnInit {
+export class DialogTaskTreatmentComponent implements OnInit {
   task = new Task();
   allEntries = []; ///
   entrieDate!: Date;
@@ -20,21 +21,21 @@ export class DialogTaskFoodComponent implements OnInit {
   locationId = '';
   beecolonyId = '';
   entrieId = '';
-  taskFeeds = [];
-  selectedValue = new TaskFeed();
+  taskTreatments = [];
+  selectedValue = new TaskTreatment();
   saveValue = new Task();
   amount: number;
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskFoodComponent>) { }
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskTreatmentComponent>) { }
 
   ngOnInit(): void {
 
     this.firestore
-      .collection('taskFeed')
+      .collection('taskTreatment')
       .valueChanges({})
-      .subscribe((taskfeed: any) => {
-        console.log('alltaskfeed: ', taskfeed);
-        this.taskFeeds = taskfeed;
+      .subscribe((tasktreatment: any) => {
+        console.log('alltaskTreatment: ', tasktreatment);
+        this.taskTreatments = tasktreatment;
       })
 
 
@@ -65,11 +66,9 @@ export class DialogTaskFoodComponent implements OnInit {
   }
 
   convertData() {
-    this.saveValue.header = "Feeding"
-    this.saveValue.type = this.selectedValue.food;
+    this.saveValue.header = "Treatment"
+    this.saveValue.type = this.selectedValue.medicine;
     this.saveValue.amount = this.amount;
     this.saveValue.unit = this.selectedValue.unit;
   }
 }
-
-

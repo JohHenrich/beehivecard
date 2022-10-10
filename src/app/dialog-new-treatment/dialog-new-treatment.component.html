@@ -1,0 +1,36 @@
+
+<div>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <h1 mat-dialog-title>Add Treatment</h1>
+    <div mat-dialog-content>
+        <div>
+            <tr class="treatment-table">
+                <th>Avalible treatment</th>
+                <th>Unit</th>
+            </tr>
+            <tr *ngFor="let taskTreatment of taskTreatments">
+                <td>{{ taskTreatment.medicine }}</td>
+                <td>{{ taskTreatment.unit }}</td>
+            </tr>
+        </div>
+        <div>
+
+            <mat-form-field appearance="outline" class="input-treatment mr-16">
+                <mat-label>New treatment</mat-label>
+                <input [(ngModel)]="newTreatment.medicine" matInput placeholder="New treatment">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="input-unit">
+                <mat-label>Unit</mat-label>
+                <input [(ngModel)]="newTreatment.unit" matInput placeholder="Unit for new treatment">
+            </mat-form-field>
+
+
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="this.dialogRef.close()">Cancel</button>
+            <button mat-button (click)="this.saveNewFood()" cdkFocusInitial>Save</button>
+        </div>
+    </div>

@@ -6,21 +6,21 @@ import {  MatSelectModule } from '@angular/material/select';
 import { Task } from 'src/models/task.class';
 
 @Component({
-  selector: 'app-dialog-food-task',
-  templateUrl: './dialog-food-task.component.html',
-  styleUrls: ['./dialog-food-task.component.scss']
+  selector: 'app-dialog-new-food',
+  templateUrl: './dialog-new-food.component.html',
+  styleUrls: ['./dialog-new-food.component.scss']
 })
-export class DialogFoodTaskComponent implements OnInit {
+export class DialogNewFoodComponent implements OnInit {
   taskFeeds = [];
   loading = false;
   newFood = new TaskFeed();
 
 
-  constructor(private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogFoodTaskComponent>) { }
+  constructor(private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogNewFoodComponent>) { }
 
   ngOnInit(): void {
     this.firestore
-    .collection('taskfeed')
+    .collection('taskFeed')
     .valueChanges({})
     .subscribe((taskfeed: any) => {
       console.log('alltaskfeed: ', taskfeed);
@@ -31,7 +31,7 @@ export class DialogFoodTaskComponent implements OnInit {
   }
   saveNewFood(){
     this.firestore
-    .collection('taskfeed')
+    .collection('taskFeed')
     .add(this.newFood.toJSON())
     .then((result: any) => {
       console.log('Adding newFood', result);

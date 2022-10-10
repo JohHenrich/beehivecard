@@ -11,9 +11,21 @@
 
     <mat-card-content>
         {{ entrieDate | date:'dd/MM/yy'}} {{ entrie.description }}
-        <div *ngFor="let task of allTasks">
+        <div>
         
-            <app-task-card [allTasks]="task"></app-task-card>
+            <table class="table">
+                <tr>
+                    <th>Task-type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+                <tr *ngFor="let task of allTasks" >
+                    <td>{{ task.header }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.amount }}{{ task.unit }}</td>
+                </tr>
+        
+            </table>  
             
         </div>
      

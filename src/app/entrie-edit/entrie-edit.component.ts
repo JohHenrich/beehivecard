@@ -5,6 +5,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Beecolony } from 'src/models/beecolony.class';
 import { Entries } from 'src/models/entries.class';
 import { DialogTaskFoodComponent } from '../dialog-task-feeding/dialog-task-feeding.component';
+import { DialogTaskTreatmentComponent } from '../dialog-task-treatment/dialog-task-treatment.component';
+import { Task } from 'src/models/task.class';
 
 @Component({
   selector: 'app-entrie-edit',
@@ -21,6 +23,9 @@ export class EntrieEditComponent implements OnInit {
   allEntries = [];
   entrieDate: Date;
   allBeecolonys = [];
+  allTasks = [];
+
+
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
@@ -34,7 +39,7 @@ export class EntrieEditComponent implements OnInit {
     })
     this.getBecolony();
     this.getEntries();
-    
+    this.getTasks();
 
   }
   getBecolony() {
@@ -84,10 +89,34 @@ export class EntrieEditComponent implements OnInit {
     //console.log('Name:', this.locations)
   }
 
-  openDialogeAddTaskFood() {
-    const dialog = this.dialog.open(DialogTaskFoodComponent);
-   
-
+  getTasks() {
+    this.firestore
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .doc(this.entriesId)
+      .collection('tasks')
+      .valueChanges()
+      .subscribe((alltasks : any) => {
+        console.log(alltasks );
+        this.allTasks  = alltasks;
+       
+      })
   }
 
+  openDialogeAddTaskFood() {
+    const dialog = this.dialog.open(DialogTaskFoodComponent);
+    dialog.componentInstance.beecolonyId = this.beecolonyId;
+    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.entrieId = this.entriesId;
+  }
+  
+  openDialogeAddTaskTreatment(){
+    const dialog = this.dialog.open(DialogTaskTreatmentComponent);
+    dialog.componentInstance.beecolonyId = this.beecolonyId;
+    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.entrieId = this.entriesId;
+  }
 }
