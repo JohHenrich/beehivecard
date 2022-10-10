@@ -50,6 +50,8 @@ import { DialogTaskFoodComponent } from './dialog-task-feeding/dialog-task-feedi
 import { DialogNewFoodComponent } from './dialog-new-food/dialog-new-food.component';
 import { DialogTaskTreatmentComponent } from './dialog-task-treatment/dialog-task-treatment.component';
 import { DialogNewTreatmentComponent } from './dialog-new-treatment/dialog-new-treatment.component';
+import { DialogTaskHarvestComponent } from './dialog-task-harvest/dialog-task-harvest.component';
+import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-harvest.component';
 
 
 @NgModule({
@@ -75,7 +77,9 @@ import { DialogNewTreatmentComponent } from './dialog-new-treatment/dialog-new-t
     DialogTaskFoodComponent,
     DialogNewFoodComponent,
     DialogTaskTreatmentComponent,
-    DialogNewTreatmentComponent
+    DialogNewTreatmentComponent,
+    DialogTaskHarvestComponent,
+    DialogEditHarvestComponent
   ],
   imports: [
     BrowserModule,

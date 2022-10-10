@@ -1,0 +1,21 @@
+<p>dialog-edit-harvest works!</p>
+<div>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <h1 mat-dialog-title>Edit harvest</h1>
+    <div mat-dialog-content>
+
+        <div>
+
+            <mat-form-field appearance="outline" class="input-unit">
+                <mat-label>Honey weight per comb</mat-label>
+                <input [(ngModel)]="combweight" matInput placeholder="weight per comb">
+            </mat-form-field>
+
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="this.dialogRef.close()">Cancel</button>
+            <button mat-button (click)="this.saveData()" cdkFocusInitial>Save</button>
+        </div>
+    </div>

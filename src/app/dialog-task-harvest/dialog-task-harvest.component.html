@@ -1,0 +1,35 @@
+<p>dialog-task-harvest works!</p>
+<div class="dialog-container">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <h1 mat-dialog-title>Harvest task</h1>
+    <div mat-dialog-content>
+        <div>
+            <mat-form-field appearance="outline" class="mr-16">
+                <mat-label>Honeycomb removed</mat-label>
+                <input [disabled]="loading" [(ngModel)]="combs" matInput placeholder="Amount">
+
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline" class="mr-16">
+                <mat-label>Amount</mat-label>
+                <input [disabled]="loading" [(ngModel)]="amount*combs" matInput placeholder="Amount">
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Unit</mat-label>
+                <input [disabled]="loading" [(ngModel)]="unit" matInput placeholder="Unit">
+
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+
+
+        <button mat-button (click)="this.dialogRef.close()">Cancel</button>
+        <button mat-button (click)="saveTask()" cdkFocusInitial>Save</button>
+    </div>
+</div>

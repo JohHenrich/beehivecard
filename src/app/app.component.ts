@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogNewFoodComponent } from './dialog-new-food/dialog-new-food.component';
 import { DialogNewTreatmentComponent } from './dialog-new-treatment/dialog-new-treatment.component';
-
+import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-harvest.component';
 
 
 @Component({
@@ -21,5 +21,8 @@ export class AppComponent {
   
   openDialogNewTreatment(){
     this.dialog.open(DialogNewTreatmentComponent);
+  }
+  openDialogEditHarvest(){
+    this.dialog.open(DialogEditHarvestComponent);
   }
 }
