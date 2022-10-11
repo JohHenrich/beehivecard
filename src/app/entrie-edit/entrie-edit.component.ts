@@ -7,7 +7,7 @@ import { Entries } from 'src/models/entries.class';
 import { DialogTaskFoodComponent } from '../dialog-task-feeding/dialog-task-feeding.component';
 import { DialogTaskTreatmentComponent } from '../dialog-task-treatment/dialog-task-treatment.component';
 import { DialogTaskHarvestComponent } from '../dialog-task-harvest/dialog-task-harvest.component';
-import { Task } from 'src/models/task.class';
+import { DialogTaskGeneralComponent } from '../dialog-task-general/dialog-task-general.component';
 
 @Component({
   selector: 'app-entrie-edit',
@@ -123,6 +123,13 @@ export class EntrieEditComponent implements OnInit {
   
   openDialogeAddTaskHarvest(){
     const dialog = this.dialog.open(DialogTaskHarvestComponent);
+    dialog.componentInstance.beecolonyId = this.beecolonyId;
+    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.entrieId = this.entriesId;
+  }
+
+  openDialogeAddTaskGeneral(){
+    const dialog = this.dialog.open(DialogTaskGeneralComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
