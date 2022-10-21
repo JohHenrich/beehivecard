@@ -1,0 +1,27 @@
+
+.change-data-box{
+    display: flex;
+
+    align-items: center;
+
+    .mat-card-contenmat-card-content{
+        margin-bottom: 0 !important;
+    }
+ 
+}
+
+
+.card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: relative;
+    margin-top: 10px;
+    overflow-x: unset !important;
+
+    input{
+        width: 10px;
+    }
+  
+}

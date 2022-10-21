@@ -38,6 +38,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     position: relative;
     height: 100%; 
 
+
     mat-progress-bar{
         position: absolute;
         left: -24px;
@@ -47,6 +48,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 
 }
+
+.flex-r{
+    display: flex !important;
+    flex-direction: row;
+}
+.d-flex{
+    display: flex;
+}
+
 
 .table {
     width: 100%;

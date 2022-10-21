@@ -1,29 +1,29 @@
 export class  GeneralTask {
     
     droneframe: Number;
-    broodframes: string;
+    broodframes: Number;
     emptyframe: Number;
-    feedframe: string;
+    feedframe: Number;
     middlewallframe: Number;
-    honeyroom: string;
+    honeyroom: Number;
     framehive: Number;
-    beeescape: string;
+    beeescape: Number;
     barricade: Number;
-    diaper: string;
+    diaper: Number;
 
 
     constructor(obj?: any) {
 
-        this.droneframe = obj ? obj.droneframe : '';
-        this.broodframes = obj ? obj.broodframes : '';
-        this.emptyframe = obj ? obj.emptyframe : '';
-        this.feedframe = obj ? obj.feedframe : '';
-        this.middlewallframe = obj ? obj.middlewallframe : '';
-        this.honeyroom = obj ? obj.honeyroom : '';
-        this.framehive = obj ? obj.framehive : '';
-        this.beeescape = obj ? obj.beeescape : '';
-        this.barricade = obj ? obj.barricade : '';
-        this.diaper = obj ? obj.diaper : '';
+        this.droneframe = obj ? obj.droneframe : '0';
+        this.broodframes = obj ? obj.broodframes : '0';
+        this.emptyframe = obj ? obj.emptyframe : '0';
+        this.feedframe = obj ? obj.feedframe : '0';
+        this.middlewallframe = obj ? obj.middlewallframe : '0';
+        this.honeyroom = obj ? obj.honeyroom : '0';
+        this.framehive = obj ? obj.framehive : '0';
+        this.beeescape = obj ? obj.beeescape : '0';
+        this.barricade = obj ? obj.barricade : '0';
+        this.diaper = obj ? obj.diaper : '0';
         
     }
 
