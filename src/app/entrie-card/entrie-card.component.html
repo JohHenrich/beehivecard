@@ -26,7 +26,17 @@
                 </tr>
         
             </table>  
-            
+            <table class="table">
+                <tr  *ngIf="generalData">
+                    <th>Type</th>
+                    <th>Amount</th>
+                </tr>
+                <tr *ngFor="let generalEntrie of generalList; let i = index" >
+                    <td>{{ generalEntrie }}</td>
+                    <td>{{ this.dataList[i] }}</td>
+                </tr>
+        
+            </table>  
         </div>
      
     </mat-card-content>

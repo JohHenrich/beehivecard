@@ -115,7 +115,7 @@ export class DialogTaskGeneralComponent implements OnInit {
       .doc(this.beecolonyId)
       .collection('entries')
       .doc(this.entrieId)
-      .collection('tasks')
+      .collection('generalEntries')
       .add(this.saveGeneralTask.toJSON())
       .then((result: any) => {
         console.log('Adding generalTask finished', result);

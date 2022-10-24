@@ -53,6 +53,7 @@ import { DialogNewTreatmentComponent } from './dialog-new-treatment/dialog-new-t
 import { DialogTaskHarvestComponent } from './dialog-task-harvest/dialog-task-harvest.component';
 import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-harvest.component';
 import { DialogTaskGeneralComponent } from './dialog-task-general/dialog-task-general.component';
+import { DialogTaskEvaluationComponent } from './dialog-task-evaluation/dialog-task-evaluation.component';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { DialogTaskGeneralComponent } from './dialog-task-general/dialog-task-ge
     DialogNewTreatmentComponent,
     DialogTaskHarvestComponent,
     DialogEditHarvestComponent,
-    DialogTaskGeneralComponent
+    DialogTaskGeneralComponent,
+    DialogTaskEvaluationComponent
   ],
   imports: [
     BrowserModule,
