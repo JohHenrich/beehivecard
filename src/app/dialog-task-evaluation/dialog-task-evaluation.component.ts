@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Beecolony } from 'src/models/beecolony.class';
 import { Entries } from 'src/models/entries.class';
 import { Task } from 'src/models/task.class';
+import { EvaluationTask} from 'src/models/evaluationtask.class';
+
 
 @Component({
   selector: 'app-dialog-task-evaluation',
@@ -12,6 +14,15 @@ import { Task } from 'src/models/task.class';
   styleUrls: ['./dialog-task-evaluation.component.scss']
 })
 export class DialogTaskEvaluationComponent implements OnInit {
+  queenCell: Boolean = false;
+  queen: Boolean = false;
+  brood: Boolean = false;
+  pens: Boolean = false;
+  varroaInfestation: Number;
+  bootyWeight: Number;
+  note: String;
+
+
   task = new Task();
   allEntries = []; ///
   entrieDate!: Date;
@@ -21,7 +32,7 @@ export class DialogTaskEvaluationComponent implements OnInit {
   entrieId = '';
   taskTreatments = [];
 
-  saveValue = new Task();
+  saveValue = new EvaluationTask();
   amount: number = 1.5;
   combs: number;
   unit = 'kg';
@@ -33,7 +44,7 @@ export class DialogTaskEvaluationComponent implements OnInit {
   saveTask() {
     this.loading = true;
 
-    this.convertData();
+  
 
     this.firestore
       .collection('locations')
@@ -42,7 +53,7 @@ export class DialogTaskEvaluationComponent implements OnInit {
       .doc(this.beecolonyId)
       .collection('entries')
       .doc(this.entrieId)
-      .collection('tasks')
+      .collection('evaluationTask')
       .add(this.saveValue.toJSON())
       .then((result: any) => {
         console.log('Adding beecolony finished', result);
@@ -52,9 +63,4 @@ export class DialogTaskEvaluationComponent implements OnInit {
 
   }
 
-  convertData() {
-    this.saveValue.header = "Honey harvest"
-    this.saveValue.amount = this.amount;
-
-  }
 }

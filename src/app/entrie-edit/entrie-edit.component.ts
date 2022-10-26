@@ -8,6 +8,8 @@ import { DialogTaskFoodComponent } from '../dialog-task-feeding/dialog-task-feed
 import { DialogTaskTreatmentComponent } from '../dialog-task-treatment/dialog-task-treatment.component';
 import { DialogTaskHarvestComponent } from '../dialog-task-harvest/dialog-task-harvest.component';
 import { DialogTaskGeneralComponent } from '../dialog-task-general/dialog-task-general.component';
+import { DialogTaskEvaluationComponent } from '../dialog-task-evaluation/dialog-task-evaluation.component';
+
 
 @Component({
   selector: 'app-entrie-edit',
@@ -25,7 +27,10 @@ export class EntrieEditComponent implements OnInit {
   entrieDate: Date;
   allBeecolonys = [];
   allTasks = [];
-
+  generalEntries = [];
+  generalList = [];
+  generalData: boolean = false;
+  dataList = [];
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
@@ -41,6 +46,7 @@ export class EntrieEditComponent implements OnInit {
     this.getBecolony();
     this.getEntries();
     this.getTasks();
+    this.getGeneral();
 
   }
   getBecolony() {
@@ -106,6 +112,40 @@ export class EntrieEditComponent implements OnInit {
        
       })
   }
+  
+  getGeneral(){
+        this.firestore
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .doc(this.entriesId)
+      .collection('generalEntries')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((generalEntries: any) => {
+        this.generalEntries = generalEntries;
+        console.log('allTasks: ', this.generalEntries);
+        this.convertData();
+      })
+  }
+
+  convertData() {
+    this.generalList = Object.keys(this.generalEntries[0]);
+    if (this.generalList.length > 0) {
+      this.generalData = true;
+    }
+
+
+    Object.entries(this.generalEntries[0]).forEach(entry => {
+      const [key, value] = entry;
+      if (key != "customidName") {
+        this.dataList.push(value);
+      }
+    });
+    this.dataList.splice(10);
+    this.generalList.splice(10)
+  }
 
   openDialogeAddTaskFood() {
     const dialog = this.dialog.open(DialogTaskFoodComponent);
@@ -130,6 +170,13 @@ export class EntrieEditComponent implements OnInit {
 
   openDialogeAddTaskGeneral(){
     const dialog = this.dialog.open(DialogTaskGeneralComponent);
+    dialog.componentInstance.beecolonyId = this.beecolonyId;
+    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.entrieId = this.entriesId;
+  }
+
+  openDialogeAddTaskEvaluation(){
+    const dialog = this.dialog.open(DialogTaskEvaluationComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;

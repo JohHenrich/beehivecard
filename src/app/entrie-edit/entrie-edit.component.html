@@ -35,6 +35,17 @@
     </tr>
 
 </table>  
+<table class="table">
+    <tr  *ngIf="generalData">
+        <th>Type</th>
+        <th>Amount</th>
+    </tr>
+    <tr *ngFor="let generalEntrie of generalList; let i = index" >
+        <td>{{ generalEntrie }}</td>
+        <td>{{ this.dataList[i] }}</td>
+    </tr>
+
+</table>  
 
 <button class="add-feeding-btn" mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFood()">
     <mat-icon>add</mat-icon>
@@ -49,5 +60,9 @@
 </button>
 
 <button class="add-general-btn" mat-fab color="primary" matTooltip="Add generaltasks" (click)="openDialogeAddTaskGeneral()">
+    <mat-icon>add</mat-icon>
+</button>
+
+<button class="add-evaluation-btn" mat-fab color="primary" matTooltip="Add generaltasks" (click)="openDialogeAddTaskEvaluation()">
     <mat-icon>add</mat-icon>
 </button>

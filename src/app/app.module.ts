@@ -54,7 +54,7 @@ import { DialogTaskHarvestComponent } from './dialog-task-harvest/dialog-task-ha
 import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-harvest.component';
 import { DialogTaskGeneralComponent } from './dialog-task-general/dialog-task-general.component';
 import { DialogTaskEvaluationComponent } from './dialog-task-evaluation/dialog-task-evaluation.component';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -108,7 +108,8 @@ import { DialogTaskEvaluationComponent } from './dialog-task-evaluation/dialog-t
     //provideFirestore(() => getFirestore()),
     MatProgressBarModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
