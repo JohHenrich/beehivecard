@@ -37,5 +37,10 @@ export class LocationsComponent implements OnInit {
   openAddLocation() {
     this.dialog.open( DialogAddLocationComponent );
   }
-
+  deleteLocation(locationId){
+    this.firestore
+    .collection('locations')
+    .doc(locationId)
+    .delete();
+  }
 }

@@ -16,8 +16,6 @@ export class BeecolonysComponent implements OnInit {
   locationId = '';
   locations: Locations = new Locations();
   bees: Beecolony = new Beecolony();
-
-
   allBeecolonys = [];
 
 
@@ -66,15 +64,28 @@ export class BeecolonysComponent implements OnInit {
       })
   }
 
+
   openAddDialog() {
     const dialog = this.dialog.open(DialogAddBeecolonyComponent);
     //dialog.componentInstance.locations[this.locationId] = new Locations(this.locations[this.locationId].beecolonys[this.allBeecolonys.length].toJSON);
     dialog.componentInstance.locationId = this.locationId;
 
   }
+
+
   openEditDialog() {
     const dialog = this.dialog.open(DialogEditLocationComponent);
     dialog.componentInstance.locations = this.locations;
     dialog.componentInstance.locationId = this.locationId;
+  }
+
+
+  deleteBeecolony(beecolonyId){
+    this.firestore
+    .collection('locations')
+    .doc(this.locationId)
+    .collection('beecolonys')
+    .doc(beecolonyId)
+    .delete();
   }
 }

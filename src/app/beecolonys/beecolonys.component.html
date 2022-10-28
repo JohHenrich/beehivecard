@@ -23,6 +23,7 @@
             <td>{{ beecolony.description }}</td>
             <td>{{ beecolony.group }}</td>
             <td><mat-icon [routerLink]= "['/beecolony/' + locationId  +  beecolony.customIdName]">create</mat-icon> </td>
+            <td><mat-icon (click)="deleteBeecolony(beecolony.customIdName)" >delete</mat-icon> </td>
         </tr>
 
     </table>

@@ -19,6 +19,7 @@
             <td [routerLink]= "['/location/' + locations.customIdName]">{{ locations.name }}</td>
             <td [routerLink]= "['/location/' + locations.customIdName]">{{ locations.description }}</td>
             <td>{{ locations.beecolonys }}</td>
+            <td><mat-icon (click)="deleteLocation(locations.customIdName)" >delete</mat-icon> </td>
             
         </tr>
 

@@ -25,7 +25,7 @@ export class EntrieCardComponent implements OnInit {
   generalData: boolean = false;
   locationId = '';
   beecolonyId = '';
-
+  customidName;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
@@ -66,7 +66,6 @@ export class EntrieCardComponent implements OnInit {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((generalEntries: any) => {
         this.generalEntries = generalEntries;
-        console.log('allTasks: ', this.generalEntries);
         this.convertData();
       })
 
@@ -81,8 +80,11 @@ export class EntrieCardComponent implements OnInit {
 
     Object.entries(this.generalEntries[0]).forEach(entry => {
       const [key, value] = entry;
-      if (key != "customidName") {
+      if (key != "customIdName") {
         this.dataList.push(value);
+      }
+      else{
+        this.customidName = value;
       }
     });
     this.dataList.splice(10);
@@ -91,11 +93,15 @@ export class EntrieCardComponent implements OnInit {
 
 
 
-  addTask() {
-    /*
-    const dialog = this.dialog.open(DialogEditUserComponent);
-    dialog.componentInstance.beecolony = new Beecolony(this.beecolony.toJSON());
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    */
+  deleteTask() {
+    this.firestore
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .doc(this.entrieId)
+      .delete();
+
   }
 }

@@ -47,6 +47,17 @@
 
 </table>  
 
+<table class="table">
+    <tr  *ngIf="evaluationData">
+        <th>Type</th>
+        <th>Amount</th>
+    </tr>
+    <tr *ngFor="let evaluationEntrie of evaluationList; let i = index" >
+        <td>{{ evaluationEntrie }}</td>
+        <td>{{ this.evaluationListData[i] }}</td>
+    </tr>
+
+</table>  
 <button class="add-feeding-btn" mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFood()">
     <mat-icon>add</mat-icon>
 </button>

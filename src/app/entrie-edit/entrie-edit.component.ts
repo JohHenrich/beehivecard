@@ -31,6 +31,10 @@ export class EntrieEditComponent implements OnInit {
   generalList = [];
   generalData: boolean = false;
   dataList = [];
+  evaluationEntries = [];
+  evaluationList = [];
+  evaluationListData = [];
+  evaluationData: boolean = false;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
@@ -40,13 +44,14 @@ export class EntrieEditComponent implements OnInit {
       this.beecolonyId = this.beecolonyId.slice(20, 40);
       this.locationId = paramMap.get('id');
       this.locationId = this.locationId.slice(0, 20);
-      this.entriesId  = paramMap.get('id');
-      this.entriesId  = this.entriesId.slice(40, 60);
+      this.entriesId = paramMap.get('id');
+      this.entriesId = this.entriesId.slice(40, 60);
     })
     this.getBecolony();
     this.getEntries();
     this.getTasks();
     this.getGeneral();
+    this.getEvaluationTask();
 
   }
   getBecolony() {
@@ -88,10 +93,10 @@ export class EntrieEditComponent implements OnInit {
       .doc(this.entriesId)
       .valueChanges({ idField: 'customIdName' })
       .subscribe((entries: any) => {
-     
+
         this.allEntries = entries;
         console.log('allEntries:', this.allEntries);
-        
+
       })
     //console.log('Name:', this.locations)
   }
@@ -106,15 +111,15 @@ export class EntrieEditComponent implements OnInit {
       .doc(this.entriesId)
       .collection('tasks')
       .valueChanges()
-      .subscribe((alltasks : any) => {
-        console.log(alltasks );
-        this.allTasks  = alltasks;
-       
+      .subscribe((alltasks: any) => {
+        console.log(alltasks);
+        this.allTasks = alltasks;
+
       })
   }
-  
-  getGeneral(){
-        this.firestore
+
+  getGeneral() {
+    this.firestore
       .collection('locations')
       .doc(this.locationId)
       .collection('beecolonys')
@@ -126,11 +131,29 @@ export class EntrieEditComponent implements OnInit {
       .subscribe((generalEntries: any) => {
         this.generalEntries = generalEntries;
         console.log('allTasks: ', this.generalEntries);
-        this.convertData();
+        this.convertGeneralData();
       })
   }
 
-  convertData() {
+  getEvaluationTask() {
+    this.firestore
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .doc(this.entriesId)
+      .collection('evaluationTask')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((evaluationEntries: any) => {
+        this.evaluationEntries = evaluationEntries;
+        console.log('allTasks: ', this.evaluationEntries);
+        this.convertEvalutionData();
+      })
+  }
+
+
+  convertGeneralData() {
     this.generalList = Object.keys(this.generalEntries[0]);
     if (this.generalList.length > 0) {
       this.generalData = true;
@@ -147,6 +170,23 @@ export class EntrieEditComponent implements OnInit {
     this.generalList.splice(10)
   }
 
+  convertEvalutionData() {
+    this.evaluationList = Object.keys(this.evaluationEntries[0]);
+    if (this.evaluationList.length > 0) {
+      this.evaluationData = true;
+    }
+
+
+    Object.entries(this.evaluationEntries[0]).forEach(entry => {
+      const [key, value] = entry;
+      if (key != "customidName") {
+        this.evaluationListData.push(value);
+      }
+    });
+    this.evaluationList.splice(8);
+    this.evaluationList.splice(8)
+  }
+
   openDialogeAddTaskFood() {
     const dialog = this.dialog.open(DialogTaskFoodComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
@@ -154,28 +194,28 @@ export class EntrieEditComponent implements OnInit {
     dialog.componentInstance.entrieId = this.entriesId;
   }
 
-  openDialogeAddTaskTreatment(){
+  openDialogeAddTaskTreatment() {
     const dialog = this.dialog.open(DialogTaskTreatmentComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
   }
-  
-  openDialogeAddTaskHarvest(){
+
+  openDialogeAddTaskHarvest() {
     const dialog = this.dialog.open(DialogTaskHarvestComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
   }
 
-  openDialogeAddTaskGeneral(){
+  openDialogeAddTaskGeneral() {
     const dialog = this.dialog.open(DialogTaskGeneralComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
   }
 
-  openDialogeAddTaskEvaluation(){
+  openDialogeAddTaskEvaluation() {
     const dialog = this.dialog.open(DialogTaskEvaluationComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;

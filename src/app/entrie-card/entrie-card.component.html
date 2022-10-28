@@ -5,7 +5,7 @@
     </button>
     <mat-menu #addressMenu="matMenu">
         <button mat-menu-item [routerLink]= "['/entrie/' + locationId  +  beecolonyId + entrieId]">Edit entrie</button>
-        <button mat-menu-item>Delete entrie</button>
+        <button mat-menu-item (click)="deleteTask()"> Delete entrie</button>
     </mat-menu>
 
 
