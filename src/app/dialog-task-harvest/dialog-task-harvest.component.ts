@@ -59,7 +59,8 @@ export class DialogTaskHarvestComponent implements OnInit {
 
   convertData() {
     this.saveValue.header = "Honey harvest"
-    this.saveValue.amount = this.amount;
+    this.saveValue.type = "Honey"
+    this.saveValue.amount = this.amount * this.combs;
 
   }
 } 

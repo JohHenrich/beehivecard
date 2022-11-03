@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Beecolony } from 'src/models/beecolony.class';
 import { Entries } from 'src/models/entries.class';
 import { Task } from 'src/models/task.class';
-import { EvaluationTask} from 'src/models/evaluationtask.class';
+import { EvaluationTask } from 'src/models/evaluationtask.class';
 
 
 @Component({
@@ -14,15 +14,6 @@ import { EvaluationTask} from 'src/models/evaluationtask.class';
   styleUrls: ['./dialog-task-evaluation.component.scss']
 })
 export class DialogTaskEvaluationComponent implements OnInit {
-  queenCell: Boolean = false;
-  queen: Boolean = false;
-  brood: Boolean = false;
-  pens: Boolean = false;
-  varroaInfestation: Number;
-  bootyWeight: Number;
-  note: String;
-
-
   task = new Task();
   allEntries = []; ///
   entrieDate!: Date;
@@ -30,37 +21,56 @@ export class DialogTaskEvaluationComponent implements OnInit {
   locationId = '';
   beecolonyId = '';
   entrieId = '';
+  evaluationEntries: EvaluationTask;
+  evaluationCustomId = '';
   taskTreatments = [];
+  
 
-  saveValue = new EvaluationTask();
-  amount: number = 1.5;
-  combs: number;
-  unit = 'kg';
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskEvaluationComponent>) { }
 
   ngOnInit(): void {
+ 
+
   }
+
+
   saveTask() {
     this.loading = true;
+    if (this.evaluationCustomId) {
+      this.firestore
+        .collection('locations')
+        .doc(this.locationId)
+        .collection('beecolonys')
+        .doc(this.beecolonyId)
+        .collection('entries')
+        .doc(this.entrieId)
+        .collection('evaluationTask')
+        .doc(this.evaluationCustomId)
+        .update(this.evaluationEntries.toJSON())
+        .then((result: any) => {
+          console.log('Adding evalutionTask finished', result);
+          this.loading = false;
+          this.dialogRef.close();
+        });
+    }
 
-  
-
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entrieId)
-      .collection('evaluationTask')
-      .add(this.saveValue.toJSON())
-      .then((result: any) => {
-        console.log('Adding beecolony finished', result);
-        this.loading = false;
-        this.dialogRef.close();
-      });
-
+    else {
+      this.firestore
+        .collection('locations')
+        .doc(this.locationId)
+        .collection('beecolonys')
+        .doc(this.beecolonyId)
+        .collection('entries')
+        .doc(this.entrieId)
+        .collection('evaluationTask')
+        .add(this.evaluationEntries.toJSON())
+        .then((result: any) => {
+          console.log('Adding evalutionTask finished', result);
+          this.loading = false;
+          this.dialogRef.close();
+        });
+    }
   }
 
 }

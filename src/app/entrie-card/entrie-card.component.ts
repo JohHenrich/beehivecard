@@ -25,7 +25,7 @@ export class EntrieCardComponent implements OnInit {
   generalData: boolean = false;
   locationId = '';
   beecolonyId = '';
-  customidName;
+
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
@@ -83,9 +83,7 @@ export class EntrieCardComponent implements OnInit {
       if (key != "customIdName") {
         this.dataList.push(value);
       }
-      else{
-        this.customidName = value;
-      }
+
     });
     this.dataList.splice(10);
     this.generalList.splice(10)

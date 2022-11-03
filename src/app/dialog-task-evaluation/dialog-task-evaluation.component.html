@@ -2,18 +2,19 @@
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
     <h1 mat-dialog-title>Evaluation task</h1>
+
     <div mat-dialog-content>
         <section class="chechbox-section">
-            <mat-checkbox class="margin" [(ngModel)]="saveValue.queenCell">Queen cells</mat-checkbox>
-            <mat-checkbox class="margin" [(ngModel)]="saveValue.queen">Queem</mat-checkbox>
-            <mat-checkbox class="margin" [(ngModel)]="saveValue.brood">Brood</mat-checkbox>
-            <mat-checkbox class="margin" [(ngModel)]="saveValue.pens">Pens</mat-checkbox>
+            <mat-checkbox class="margin" [(ngModel)]="evaluationEntries.queenCell">Queen cells</mat-checkbox>
+            <mat-checkbox class="margin" [(ngModel)]="evaluationEntries.queen">Queem</mat-checkbox>
+            <mat-checkbox class="margin" [(ngModel)]="evaluationEntries.brood">Brood</mat-checkbox>
+            <mat-checkbox class="margin" [(ngModel)]="evaluationEntries.pens">Pens</mat-checkbox>
         </section>
       
         <div>
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Verroa Infestation</mat-label>
-                <input [disabled]="loading" [(ngModel)]="saveValue.varroaInfestation" matInput placeholder="Amount">
+                <input [disabled]="loading" [(ngModel)]="evaluationEntries.varroaInfestation" matInput placeholder="Amount">
 
             </mat-form-field>
         </div>
@@ -21,7 +22,7 @@
         <div>
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Booty weight</mat-label>
-                <input [disabled]="loading" [(ngModel)]="saveValue.bootyWeight" matInput placeholder="Amount">
+                <input [disabled]="loading" [(ngModel)]="evaluationEntries.bootyWeight" matInput placeholder="Amount">
 
             </mat-form-field>
         </div>
@@ -29,11 +30,12 @@
         <div>
             <mat-form-field appearance="outline">
                 <mat-label>Note</mat-label>
-                <input [disabled]="loading" [(ngModel)]="saveValue.note" matInput placeholder="Unit">
+                <input [disabled]="loading" [(ngModel)]="evaluationEntries.note" matInput placeholder="Unit">
 
             </mat-form-field>
         </div>
     </div>
+    
     <div mat-dialog-actions>
 
 

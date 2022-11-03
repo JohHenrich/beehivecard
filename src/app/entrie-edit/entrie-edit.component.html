@@ -2,17 +2,16 @@
     <button mat-icon-button mat-button class="mat-icon-button" [matMenuTriggerFor]="beecolonyMenu" aria-label="Menue">
         <mat-icon>more_vert</mat-icon>
     </button>
+
     <mat-menu #beecolonyMenu="matMenu">
-        <button mat-menu-item >Edit beecolony</button>
-        <button mat-menu-item >Delete beecolony</button>
+        <button mat-menu-item>Edit beecolony</button>
+        <button mat-menu-item>Delete beecolony</button>
     </mat-menu>
 
     <img mat-card-avatar src="./assets/img/beecolony.png">
     <div class="beecolony-details">
         <h2>Name: {{ beecolony.name }} <br>Location: {{ beecolony.position }}</h2>
-
     </div>
-
 </mat-card>
 
 <mat-card>
@@ -21,59 +20,82 @@
         <h2>Datum: {{ entrieDate | date:'dd/MM/yy' }} </h2>
     </div>
 </mat-card>
-        
-<table class="table">
-    <tr>
-        <th>Task-type</th>
-        <th>Description</th>
-        <th>Amount</th>
-    </tr>
-    <tr *ngFor="let task of allTasks" >
-        <td>{{ task.header }}</td>
-        <td>{{ task.description }}</td>
-        <td>{{ task.amount }}{{ task.unit }}</td>
-    </tr>
 
-</table>  
-<table class="table">
-    <tr  *ngIf="generalData">
-        <th>Type</th>
-        <th>Amount</th>
-    </tr>
-    <tr *ngFor="let generalEntrie of generalList; let i = index" >
-        <td>{{ generalEntrie }}</td>
-        <td>{{ this.dataList[i] }}</td>
-    </tr>
+<mat-card>
+    <table class="table">
+        <tr>
+            <th>Task-type</th>
+            <th>Type</th>
+            <th>Amount</th>
+        </tr>
+        <tr *ngFor="let task of allTasks">
+            <td>{{ task.header }}</td>
+            <td>{{ task.type }}</td>
+            <td>{{ task.amount }} {{ task.unit }}</td>
+            <td><mat-icon (click)="editTask(task, task.header)" >edit</mat-icon>
+                <mat-icon (click)="deleteTask(task.customIdName)" >delete</mat-icon></td>
+        </tr>
 
-</table>  
+    </table>
 
-<table class="table">
-    <tr  *ngIf="evaluationData">
-        <th>Type</th>
-        <th>Amount</th>
-    </tr>
-    <tr *ngFor="let evaluationEntrie of evaluationList; let i = index" >
-        <td>{{ evaluationEntrie }}</td>
-        <td>{{ this.evaluationListData[i] }}</td>
-    </tr>
+    <div class="container-btn">
+        <button mat-fab color="primary" matTooltip="Add treatment" (click)="openDialogeAddTaskTreatment('')">
+            <mat-icon>add</mat-icon>
+        </button>
 
-</table>  
-<button class="add-feeding-btn" mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFood()">
-    <mat-icon>add</mat-icon>
-</button>
+        <button mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFood()">
+            <mat-icon>add</mat-icon>
+        </button>
 
-<button class="add-treatment-btn" mat-fab color="primary" matTooltip="Add treatment" (click)="openDialogeAddTaskTreatment()">
-    <mat-icon>add</mat-icon>
-</button>
+        <button mat-fab color="primary" matTooltip="Add harvest" (click)="openDialogeAddTaskHarvest()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</mat-card>
 
-<button class="add-harvest-btn" mat-fab color="primary" matTooltip="Add harvest" (click)="openDialogeAddTaskHarvest()">
-    <mat-icon>add</mat-icon>
-</button>
+<mat-card>
+    <table class="table">
+        <tr *ngIf="generalData">
+            <th>General</th>
+            <th>Amount</th>
+        </tr>
+        <tr *ngFor="let generalEntrie of generalList; let i = index">
+            <td>{{ generalEntrie }}</td>
+            <td>{{ this.dataList[i] }}</td>
 
-<button class="add-general-btn" mat-fab color="primary" matTooltip="Add generaltasks" (click)="openDialogeAddTaskGeneral()">
-    <mat-icon>add</mat-icon>
-</button>
+        </tr>
+    </table>
+    <div *ngIf="generalData" class="container-btn">
+        <button mat-fab color="primary" matTooltip="Edit generaltask" [matTooltipPosition]="'left'" (click)="openDialogeEditTaskGeneral()">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="!generalData" class="container-btn">
+        <button mat-fab color="primary" matTooltip="Add generaltask" [matTooltipPosition]="'left'" (click)="openDialogeAddTaskGeneral()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</mat-card>
 
-<button class="add-evaluation-btn" mat-fab color="primary" matTooltip="Add generaltasks" (click)="openDialogeAddTaskEvaluation()">
-    <mat-icon>add</mat-icon>
-</button>
+<mat-card>
+    <table class="table">
+        <tr *ngIf="evaluationData">
+            <th>Evaluation</th>
+            <th>Amount</th>
+        </tr>
+        <tr *ngFor="let evaluationEntrie of evaluationList; let i = index">
+            <td>{{ evaluationEntrie }}</td>
+            <td>{{ this.evaluationListData[i] }}</td>
+        </tr>
+    </table>
+    <div *ngIf="evaluationData" class="container-btn">
+        <button mat-fab color="primary" matTooltip="Edit Evaluation" [matTooltipPosition]="'left'" (click)="openDialogeEditTaskEvaluation()">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="!evaluationData" class="container-btn">
+        <button mat-fab color="primary" matTooltip="Add Evaluation"  [matTooltipPosition]="'left'" (click)="openDialogeAddTaskEvaluation()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</mat-card>

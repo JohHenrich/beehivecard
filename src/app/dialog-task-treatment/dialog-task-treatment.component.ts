@@ -37,9 +37,6 @@ export class DialogTaskTreatmentComponent implements OnInit {
         console.log('alltaskTreatment: ', tasktreatment);
         this.taskTreatments = tasktreatment;
       })
-
-
-
   }
 
 

@@ -9,58 +9,74 @@ import { GeneralTask } from 'src/models/generaltask.class';
   styleUrls: ['./dialog-task-general.component.scss']
 })
 export class DialogTaskGeneralComponent implements OnInit {
+  customIdName;
 
-  allEntries = []; ///
-  entrieDate!: Date;
+
   loading = false;
   locationId = '';
   beecolonyId = '';
   entrieId = '';
-  taskTreatments = [];
+
   generalList = [];
-  saveValue: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  saveGeneralTask = new GeneralTask();
+  saveValue: number[] = [];
+  generalTask;
+  savelTask = new GeneralTask();
   constructor(private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskGeneralComponent>) { }
 
   ngOnInit(): void {
-    this.generalList = Object.keys(this.saveGeneralTask);
+
+    this.generalList = Object.keys(this.savelTask);
+    this.generalList.splice(10);
+
+    if (this.customIdName) {
+
+      Object.entries(this.generalTask).forEach(entry => {
+        const [key, value] = entry;
+
+        this.saveValue.push(+value);
+
+      });
+    }
+    else {
+
+      this.saveValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+
+
   }
 
   plus(index: number) {
     this.saveValue[index] = this.saveValue[index] + 1;
     switch (index) {
       case 0:
-        this.saveGeneralTask.droneframe = this.saveValue[index];
+        this.generalTask.droneframe = this.saveValue[index];
         break;
       case 1:
-        this.saveGeneralTask.broodframes = this.saveValue[index];
+        this.generalTask.broodframes = this.saveValue[index];
         break;
       case 2:
-        this.saveGeneralTask.emptyframe = this.saveValue[index];
+        this.generalTask.emptyframe = this.saveValue[index];
         break;
       case 3:
-        this.saveGeneralTask.feedframe = this.saveValue[index];
+        this.generalTask.feedframe = this.saveValue[index];
         break;
       case 4:
-        this.saveGeneralTask.middlewallframe = this.saveValue[index];
+        this.generalTask.middlewallframe = this.saveValue[index];
         break;
       case 5:
-        this.saveGeneralTask.droneframe = this.saveValue[index];
+        this.generalTask.honeyroom = this.saveValue[index];
         break;
       case 6:
-        this.saveGeneralTask.honeyroom = this.saveValue[index];
+        this.generalTask.framehive = this.saveValue[index];
         break;
       case 7:
-        this.saveGeneralTask.framehive = this.saveValue[index];
+        this.generalTask.beeescape = this.saveValue[index];
         break;
       case 8:
-        this.saveGeneralTask.beeescape = this.saveValue[index];
+        this.generalTask.barricade = this.saveValue[index];
         break;
       case 9:
-        this.saveGeneralTask.barricade = this.saveValue[index];
-        break;
-      case 10:
-        this.saveGeneralTask.diaper = this.saveValue[index];
+        this.generalTask.diaper = this.saveValue[index];
         break;
     }
 
@@ -69,62 +85,78 @@ export class DialogTaskGeneralComponent implements OnInit {
     this.saveValue[index] = this.saveValue[index] - 1;
     switch (index) {
       case 0:
-        this.saveGeneralTask.droneframe = this.saveValue[index];
+        this.generalTask.droneframe = this.saveValue[index];
         break;
       case 1:
-        this.saveGeneralTask.broodframes = this.saveValue[index];
+        this.generalTask.broodframes = this.saveValue[index];
         break;
       case 2:
-        this.saveGeneralTask.emptyframe = this.saveValue[index];
+        this.generalTask.emptyframe = this.saveValue[index];
         break;
       case 3:
-        this.saveGeneralTask.feedframe = this.saveValue[index];
+        this.generalTask.feedframe = this.saveValue[index];
         break;
       case 4:
-        this.saveGeneralTask.middlewallframe = this.saveValue[index];
+        this.generalTask.middlewallframe = this.saveValue[index];
         break;
       case 5:
-        this.saveGeneralTask.droneframe = this.saveValue[index];
+        this.generalTask.honeyroom = this.saveValue[index];
         break;
       case 6:
-        this.saveGeneralTask.honeyroom = this.saveValue[index];
+        this.generalTask.framehive = this.saveValue[index];
         break;
       case 7:
-        this.saveGeneralTask.framehive = this.saveValue[index];
+        this.generalTask.beeescape = this.saveValue[index];
         break;
       case 8:
-        this.saveGeneralTask.beeescape = this.saveValue[index];
+        this.generalTask.barricade = this.saveValue[index];
         break;
       case 9:
-        this.saveGeneralTask.barricade = this.saveValue[index];
-        break;
-      case 10:
-        this.saveGeneralTask.diaper = this.saveValue[index];
+        this.generalTask.diaper = this.saveValue[index];
         break;
     }
 
   }
 
   saveTask() {
+
     this.loading = true;
+    this.saveTask[0] = new GeneralTask(this.generalTask);
+    if (this.customIdName) {
 
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entrieId)
-      .collection('generalEntries')
-      .add(this.saveGeneralTask.toJSON())
-      .then((result: any) => {
-        console.log('Adding generalTask finished', result);
-        this.loading = false;
-        this.dialogRef.close();
-      });
+      this.firestore
+        .collection('locations')
+        .doc(this.locationId)
+        .collection('beecolonys')
+        .doc(this.beecolonyId)
+        .collection('entries')
+        .doc(this.entrieId)
+        .collection('generalEntries')
+        .doc(this.customIdName)
+        .update(this.saveTask[0].toJSON())
+        .then((result: any) => {
+          console.log('Updateing generalTask  finished', result);
+          this.loading = false;
+          this.dialogRef.close();
+        });
+    }
+    else {
 
+      this.firestore
+        .collection('locations')
+        .doc(this.locationId)
+        .collection('beecolonys')
+        .doc(this.beecolonyId)
+        .collection('entries')
+        .doc(this.entrieId)
+        .collection('generalEntries')
+        .add(this.saveTask[0].toJSON())
+        .then((result: any) => {
+          console.log('Adding generalTask finished', result);
+          this.loading = false;
+          this.dialogRef.close();
+        });
+    }
   }
-
-
 }
 
