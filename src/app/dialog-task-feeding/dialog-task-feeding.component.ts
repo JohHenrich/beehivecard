@@ -13,9 +13,9 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrls: ['./dialog-task-feeding.component.scss']
 })
 export class DialogTaskFoodComponent implements OnInit {
-  task = new Task();
-  allEntries = []; ///
-  entrieDate!: Date;
+  task:Task  = new Task();
+
+  feedingCustomId = '';
   loading = false;
   locationId = '';
   beecolonyId = '';
@@ -28,17 +28,18 @@ export class DialogTaskFoodComponent implements OnInit {
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskFoodComponent>) { }
 
   ngOnInit(): void {
-
-    this.firestore
+    if (this.feedingCustomId) {
+      this.selectedValue.unit = this.task.unit;
+      this.selectedValue.food = this.task.type; 
+    }
+    
+      this.firestore
       .collection('taskFeed')
       .valueChanges({})
       .subscribe((taskfeed: any) => {
         console.log('alltaskfeed: ', taskfeed);
         this.taskFeeds = taskfeed;
       })
-
-
-
   }
 
 
@@ -46,29 +47,47 @@ export class DialogTaskFoodComponent implements OnInit {
     this.loading = true;
 
     this.convertData();
+    if (this.feedingCustomId) {
+      this.firestore
+        .collection('locations')
+        .doc(this.locationId)
+        .collection('beecolonys')
+        .doc(this.beecolonyId)
+        .collection('entries')
+        .doc(this.entrieId)
+        .collection('tasks')
+        .doc(this.feedingCustomId)
+        .update(this.task.toJSON())
+        .then((result: any) => {
+          console.log('Adding beecolony finished', result);
+          this.loading = false;
+          this.dialogRef.close();
+        });
+    }
 
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entrieId)
-      .collection('tasks')
-      .add(this.saveValue.toJSON())
-      .then((result: any) => {
-        console.log('Adding beecolony finished', result);
-        this.loading = false;
-        this.dialogRef.close();
-      });
-
+    else {
+      this.firestore
+        .collection('locations')
+        .doc(this.locationId)
+        .collection('beecolonys')
+        .doc(this.beecolonyId)
+        .collection('entries')
+        .doc(this.entrieId)
+        .collection('tasks')
+        .add(this.task.toJSON())
+        .then((result: any) => {
+          console.log('Adding beecolony finished', result);
+          this.loading = false;
+          this.dialogRef.close();
+        });
+    }
   }
 
   convertData() {
-    this.saveValue.header = "Feeding"
-    this.saveValue.type = this.selectedValue.food;
-    this.saveValue.amount = this.amount;
-    this.saveValue.unit = this.selectedValue.unit;
+    this.task.header = "Feeding"
+    this.task.type = this.selectedValue.food;
+    this.task.amount = this.amount;
+    this.task.unit = this.selectedValue.unit;
   }
 }
 

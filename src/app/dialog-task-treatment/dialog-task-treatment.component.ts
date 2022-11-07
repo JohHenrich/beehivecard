@@ -21,6 +21,7 @@ export class DialogTaskTreatmentComponent implements OnInit {
   locationId = '';
   beecolonyId = '';
   entrieId = '';
+  treatmentCustomId = '';
   taskTreatments = [];
   selectedValue = new TaskTreatment();
   saveValue = new Task();
@@ -29,7 +30,11 @@ export class DialogTaskTreatmentComponent implements OnInit {
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskTreatmentComponent>) { }
 
   ngOnInit(): void {
-
+    if(this.treatmentCustomId){
+       this.selectedValue.medicine = this.task.type;
+       this.selectedValue.unit = this.task.unit;
+    }
+    
     this.firestore
       .collection('taskTreatment')
       .valueChanges({})
@@ -44,28 +49,48 @@ export class DialogTaskTreatmentComponent implements OnInit {
     this.loading = true;
 
     this.convertData();
+    if (this.treatmentCustomId) {
+      this.saveValue = new Task(this.task);
+      this.firestore
+        .collection('locations')
+        .doc(this.locationId)
+        .collection('beecolonys')
+        .doc(this.beecolonyId)
+        .collection('entries')
+        .doc(this.entrieId)
+        .collection('tasks')
+        .doc(this.treatmentCustomId)
+        .update(this.saveValue[0].toJSON())
+        .then((result: any) => {
+          console.log('Adding beecolony finished', result);
+          this.loading = false;
+          this.dialogRef.close();
+        });
+    
+  }
 
+  else {
     this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entrieId)
-      .collection('tasks')
-      .add(this.saveValue.toJSON())
-      .then((result: any) => {
-        console.log('Adding beecolony finished', result);
-        this.loading = false;
-        this.dialogRef.close();
-      });
-
+    .collection('locations')
+    .doc(this.locationId)
+    .collection('beecolonys')
+    .doc(this.beecolonyId)
+    .collection('entries')
+    .doc(this.entrieId)
+    .collection('tasks')
+    .add(this.task.toJSON())
+    .then((result: any) => {
+      console.log('Adding beecolony finished', result);
+      this.loading = false;
+      this.dialogRef.close();
+    });
+}
   }
 
-  convertData() {
-    this.saveValue.header = "Treatment"
-    this.saveValue.type = this.selectedValue.medicine;
-    this.saveValue.amount = this.amount;
-    this.saveValue.unit = this.selectedValue.unit;
-  }
+convertData() {
+  this.task.header = "Treatment"
+  this.task.type = this.selectedValue.medicine;
+  //this.task.amount = this.amount;
+  this.task.unit = this.selectedValue.unit;
+}
 }

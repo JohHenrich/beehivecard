@@ -21,7 +21,7 @@ export class DialogTaskEvaluationComponent implements OnInit {
   locationId = '';
   beecolonyId = '';
   entrieId = '';
-  evaluationEntries: EvaluationTask;
+  evaluationEntries: EvaluationTask = new EvaluationTask();
   evaluationCustomId = '';
   taskTreatments = [];
   

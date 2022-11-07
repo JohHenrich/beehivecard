@@ -6,7 +6,7 @@
         <div>
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Honeycomb removed</mat-label>
-                <input [disabled]="loading" [(ngModel)]="combs" matInput placeholder="Amount">
+                <input [disabled]="loading" [(ngModel)]="saveValue.amount2" matInput placeholder="Amount">
 
             </mat-form-field>
         </div>
@@ -14,13 +14,14 @@
         <div>
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Amount</mat-label>
-                <input [disabled]="loading" [(ngModel)]="amount*combs" matInput placeholder="Amount">
+                <input [disabled]="loading" [(ngModel)]="saveValue.amount2*amount" matInput
+                    placeholder="Amount">
 
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Unit</mat-label>
-                <input [disabled]="loading" [(ngModel)]="unit" matInput placeholder="Unit">
+                <input [disabled]="loading" [(ngModel)]="saveValue.unit" matInput placeholder={{unit}}>
 
             </mat-form-field>
         </div>

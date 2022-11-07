@@ -32,22 +32,22 @@
             <td>{{ task.header }}</td>
             <td>{{ task.type }}</td>
             <td>{{ task.amount }} {{ task.unit }}</td>
-            <td><mat-icon (click)="editTask(task, task.header)" >edit</mat-icon>
+            <td><mat-icon (click)="editTask(task, task.header, task.customIdName)" >edit</mat-icon>
                 <mat-icon (click)="deleteTask(task.customIdName)" >delete</mat-icon></td>
         </tr>
 
     </table>
 
     <div class="container-btn">
-        <button mat-fab color="primary" matTooltip="Add treatment" (click)="openDialogeAddTaskTreatment('')">
+        <button *ngIf="!treatmentData" mat-fab color="primary" matTooltip="Add treatment" (click)="openDialogeAddTaskTreatment()">
             <mat-icon>add</mat-icon>
         </button>
 
-        <button mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFood()">
+        <button *ngIf="!feedingData" mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFeeding()">
             <mat-icon>add</mat-icon>
         </button>
 
-        <button mat-fab color="primary" matTooltip="Add harvest" (click)="openDialogeAddTaskHarvest()">
+        <button *ngIf="!havestData" mat-fab color="primary" matTooltip="Add harvest" (click)="openDialogeAddTaskHarvest()">
             <mat-icon>add</mat-icon>
         </button>
     </div>

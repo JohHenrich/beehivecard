@@ -7,8 +7,10 @@ import { Entries } from 'src/models/entries.class';
 import { DialogTaskFoodComponent } from '../dialog-task-feeding/dialog-task-feeding.component';
 import { DialogTaskTreatmentComponent } from '../dialog-task-treatment/dialog-task-treatment.component';
 import { DialogTaskHarvestComponent } from '../dialog-task-harvest/dialog-task-harvest.component';
+import { DialogEditHarvestComponent } from '../dialog-edit-harvest/dialog-edit-harvest.component';
 import { DialogTaskGeneralComponent } from '../dialog-task-general/dialog-task-general.component';
 import { DialogTaskEvaluationComponent } from '../dialog-task-evaluation/dialog-task-evaluation.component';
+import { Task } from 'src/models/task.class';
 import { GeneralTask } from 'src/models/generaltask.class';
 import { EvaluationTask } from 'src/models/evaluationtask.class';
 
@@ -32,6 +34,9 @@ export class EntrieEditComponent implements OnInit {
   generalEntries: GeneralTask = new GeneralTask();
   generalList = [];
   generalData: boolean = false;
+  feedingData: boolean = false;
+  treatmentData: boolean = false;
+  havestData: boolean = false;
   dataList = [];
   evaluationEntries: EvaluationTask = new EvaluationTask();
   evaluationList = [];
@@ -55,6 +60,7 @@ export class EntrieEditComponent implements OnInit {
     this.getTasks();
     this.getGeneral();
     this.getEvaluationTask();
+    
 
   }
   getBecolony() {
@@ -117,6 +123,7 @@ export class EntrieEditComponent implements OnInit {
       .subscribe((alltasks: any) => {
         console.log(alltasks);
         this.allTasks = alltasks;
+        this.getTaskData();
       })
   }
 
@@ -156,6 +163,19 @@ export class EntrieEditComponent implements OnInit {
       })
   }
 
+  getTaskData(){
+    this.allTasks.forEach(function (value) {
+      if(value.header="Treatment"){
+        this.feedingData = true;
+      };
+      if(value.header="Feeding"){
+        this.feedingData = true;
+      };
+      if(value.header="Harvest"){
+        this.havestData = true;
+      };
+    }); 
+  }
 
   convertGeneralData() {
     this.generalList = Object.keys(this.generalEntries);
@@ -190,19 +210,21 @@ export class EntrieEditComponent implements OnInit {
   }
 
 
-  editTask(task: Task, treatment) {
+
+
+  editTask(task: Task, treatment, customIdName) {
     switch (treatment) {
       case 'Treatment':
-        this.openDialogeAddTaskTreatment(task);
+        this.openDialogeEditTaskTreatment(task, customIdName);
         break;
 
       case 'Feeding':
-        this.openDialogeAddTaskFood();
+        this.openDialogeEditFeeding(task, customIdName);
 
         break
 
       case 'Honey harvest':
-        this.openDialogeAddTaskHarvest();
+        this.openDialogeEditTaskHarvest(task, customIdName);
 
         break
 
@@ -212,31 +234,66 @@ export class EntrieEditComponent implements OnInit {
 
   }
   deleteTask(customIdName) {
-    
+    this.firestore
+    .collection('locations')
+    .doc(this.locationId)
+    .collection('beecolonys')
+    .doc(this.beecolonyId)
+    .collection('entries')
+    .doc(this.entriesId)
+    .collection('tasks')
+    .doc(customIdName)
+    .delete();
 
   }
 
-  openDialogeAddTaskFood() {
+  openDialogeAddTaskFeeding() {
     const dialog = this.dialog.open(DialogTaskFoodComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
   }
+  openDialogeEditFeeding(task: Task, customIdName) {
+    const dialog = this.dialog.open(DialogTaskFoodComponent);
+    dialog.componentInstance.beecolonyId = this.beecolonyId;
+    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.entrieId = this.entriesId;
+    dialog.componentInstance.feedingCustomId = customIdName;
+    dialog.componentInstance.task =task;
+  }
 
-  openDialogeAddTaskTreatment(task) {
+  openDialogeAddTaskTreatment() {
+    const dialog = this.dialog.open(DialogTaskTreatmentComponent);
+    dialog.componentInstance.beecolonyId = this.beecolonyId;
+    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.entrieId = this.entriesId;
+
+  }
+
+  openDialogeEditTaskTreatment(task: Task, customIdName) {
     const dialog = this.dialog.open(DialogTaskTreatmentComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
     dialog.componentInstance.task = task;
+    dialog.componentInstance.treatmentCustomId = customIdName;
   }
-
 
   openDialogeAddTaskHarvest() {
     const dialog = this.dialog.open(DialogTaskHarvestComponent);
     dialog.componentInstance.beecolonyId = this.beecolonyId;
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
+
+  }
+
+  openDialogeEditTaskHarvest(task: Task, customIdName) {
+    const dialog = this.dialog.open(DialogTaskHarvestComponent);
+    dialog.componentInstance.beecolonyId = this.beecolonyId;
+    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.entrieId = this.entriesId;
+    dialog.componentInstance.havestCustomId = customIdName;
+    dialog.componentInstance.saveValue = task;
   }
 
 
