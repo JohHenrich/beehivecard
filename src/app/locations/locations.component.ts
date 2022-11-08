@@ -24,6 +24,7 @@ export class LocationsComponent implements OnInit {
   constructor(public dialog: MatDialog, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
+    
     this.firestore
       .collection('locations')
       .valueChanges({ idField: 'customIdName' })

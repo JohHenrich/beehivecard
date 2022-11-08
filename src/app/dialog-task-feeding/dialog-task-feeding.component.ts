@@ -86,7 +86,6 @@ export class DialogTaskFoodComponent implements OnInit {
   convertData() {
     this.task.header = "Feeding"
     this.task.type = this.selectedValue.food;
-    this.task.amount = this.amount;
     this.task.unit = this.selectedValue.unit;
   }
 }

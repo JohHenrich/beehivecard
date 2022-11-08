@@ -12,6 +12,8 @@ import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-ha
 })
 export class AppComponent {
   title = 'simple-Beehivecard';
+  location = [];
+
   constructor(public dialog: MatDialog) {
   }
 

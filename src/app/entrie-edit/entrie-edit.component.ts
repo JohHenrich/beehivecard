@@ -33,10 +33,12 @@ export class EntrieEditComponent implements OnInit {
   generalCustomId = '';
   generalEntries: GeneralTask = new GeneralTask();
   generalList = [];
+
   generalData: boolean = false;
   feedingData: boolean = false;
   treatmentData: boolean = false;
   havestData: boolean = false;
+  
   dataList = [];
   evaluationEntries: EvaluationTask = new EvaluationTask();
   evaluationList = [];
@@ -60,7 +62,7 @@ export class EntrieEditComponent implements OnInit {
     this.getTasks();
     this.getGeneral();
     this.getEvaluationTask();
-    
+
 
   }
   getBecolony() {
@@ -140,8 +142,10 @@ export class EntrieEditComponent implements OnInit {
       .subscribe((generalEntries: any) => {
         this.generalEntries = new GeneralTask(generalEntries[0]);
         console.log('generalEntries: ', this.generalEntries);
-        this.generalCustomId = generalEntries[0].customIdName;
-        this.convertGeneralData();
+        if (generalEntries.length != 0) {
+          this.generalCustomId = generalEntries[0].customIdName;
+          this.convertGeneralData();
+        }
       })
   }
 
@@ -163,18 +167,20 @@ export class EntrieEditComponent implements OnInit {
       })
   }
 
-  getTaskData(){
-    this.allTasks.forEach(function (value) {
-      if(value.header="Treatment"){
+  getTaskData() {
+    for (let index = 0; index < this.allTasks.length; index++) {
+
+      if (this.allTasks[index].header == "Treatment") {
+        this.treatmentData = true;
+      }
+      if (this.allTasks[index].header == "Feeding") {
         this.feedingData = true;
-      };
-      if(value.header="Feeding"){
-        this.feedingData = true;
-      };
-      if(value.header="Harvest"){
+      }
+      if (this.allTasks[index].header == "Harvest") {
         this.havestData = true;
-      };
-    }); 
+      }
+    }
+
   }
 
   convertGeneralData() {
@@ -235,15 +241,15 @@ export class EntrieEditComponent implements OnInit {
   }
   deleteTask(customIdName) {
     this.firestore
-    .collection('locations')
-    .doc(this.locationId)
-    .collection('beecolonys')
-    .doc(this.beecolonyId)
-    .collection('entries')
-    .doc(this.entriesId)
-    .collection('tasks')
-    .doc(customIdName)
-    .delete();
+      .collection('locations')
+      .doc(this.locationId)
+      .collection('beecolonys')
+      .doc(this.beecolonyId)
+      .collection('entries')
+      .doc(this.entriesId)
+      .collection('tasks')
+      .doc(customIdName)
+      .delete();
 
   }
 
@@ -259,7 +265,7 @@ export class EntrieEditComponent implements OnInit {
     dialog.componentInstance.locationId = this.locationId;
     dialog.componentInstance.entrieId = this.entriesId;
     dialog.componentInstance.feedingCustomId = customIdName;
-    dialog.componentInstance.task =task;
+    dialog.componentInstance.task = task;
   }
 
   openDialogeAddTaskTreatment() {
