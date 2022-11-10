@@ -15,8 +15,8 @@
             <th>Description</th>
             <th>Beecolonys</th>
         </tr>
-        <tr *ngFor="let locations of allLocations" >
-            <td [routerLink]= "['/location/' + locations.customIdName]">{{ locations.name }}</td>
+        <tr *ngFor="let locations of data.allLocations" >
+            <td (click)="setLocation(locations.customIdName)" [routerLink]= "['/location/' + locations.customIdName]">{{ locations.name }}</td>
             <td [routerLink]= "['/location/' + locations.customIdName]">{{ locations.description }}</td>
             <td>{{ locations.beecolonys }}</td>
             <td><mat-icon (click)="deleteLocation(locations.customIdName)" >delete</mat-icon> </td>

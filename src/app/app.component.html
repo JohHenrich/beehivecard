@@ -15,22 +15,32 @@
       <li routerLink="/locations" routerLinkActive="router-link-active">
         <mat-icon>terrain icon</mat-icon>Location
       </li>
-      <ul >Stand 1</ul>
-      <p><mat-icon>settings</mat-icon> Settings</p>
-      <li (click)="openDialogNewFood()" >
+      <ul  *ngFor="let location of this.data.allLocations">
+        <li (click)="setLocationId(location.customIdName)" [routerLink]="['/location/' + location.customIdName]">{{location.name}}</li>
+        <ng-container *ngIf="location.customIdName == this.data.currentLocationId">
+          <ul *ngFor="let beecolony of this.data.allBecoloneys"
+          (click)="setBeecoloneyId(beecolony.customIdName)"  [routerLink]="['/beecolony/' + location.customIdName + beecolony.customIdName]">
+            {{beecolony.name}}</ul>
+        </ng-container>
+      </ul>
+
+      <p>
+        <mat-icon>settings</mat-icon> Settings
+      </p>
+      <li (click)="openDialogNewFood()">
         <p>Add Food</p>
       </li>
       <li (click)="openDialogNewTreatment()">
         <p>Add Treatments</p>
       </li>
       <li (click)="openDialogEditHarvest()">
-        <p>Edit harvest</p>    
+        <p>Edit harvest</p>
       </li>
       <li routerLink="/settings" routerLinkActive="router-link-active">
-        <p>Other activities</p>    
+        <p>Other activities</p>
       </li>
       <li routerLink="/settings" routerLinkActive="router-link-active">
-        <p>Reminder</p>    
+        <p>Reminder</p>
       </li>
     </ul>
 

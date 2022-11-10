@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddBeecolonyComponent } from '../dialog-add-beecolony/dialog-add-beecolony.component';
@@ -6,6 +6,9 @@ import { DialogEditLocationComponent } from '../dialog-edit-location/dialog-edit
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Locations } from 'src/models/location.class';
 import { Beecolony } from 'src/models/beecolony.class';
+import { FireService } from 'src/services/fire.service';
+import { DataService } from 'src/services/data.servie';
+
 
 @Component({
   selector: 'app-beecolonys',
@@ -19,49 +22,16 @@ export class BeecolonysComponent implements OnInit {
   allBeecolonys = [];
 
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
+  constructor(private fire: FireService, private cdr: ChangeDetectorRef, public data: DataService, private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      this.locationId = paramMap.get('id');
-      this.getLocation();
+      this.data.currentLocationId = paramMap.get('id');
+      this.fire.getLocation();
+      this.fire.getBeecoloneys();
+   
     })
-    this.getCustumId();
-
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((beecolony: any) => {
-        console.log(beecolony);
-        this.allBeecolonys = beecolony;
-      })
-
-
-  }
-  getLocation() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .valueChanges()
-      .subscribe((locations: Locations) => {
-        this.locations = new Locations(locations);
-      })
-    console.log('Name:', this.locations)
-  }
-
-
-  getCustumId() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((changes: any) => {
-        console.log('Beecolony',changes);
-        //this.allUsers = changes;
-      })
+      
   }
 
 
@@ -76,7 +46,7 @@ export class BeecolonysComponent implements OnInit {
   openEditDialog() {
     const dialog = this.dialog.open(DialogEditLocationComponent);
     dialog.componentInstance.locations = this.locations;
-    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.locationId = this.data.currentLocationId;
   }
 
 
@@ -88,4 +58,6 @@ export class BeecolonysComponent implements OnInit {
     .doc(beecolonyId)
     .delete();
   }
+
+
 }

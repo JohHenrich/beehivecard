@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { OverViewComponent } from './overview/overview.component';
 import { UserComponent } from './user/user.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -18,21 +18,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-
-
 import { FormsModule } from '@angular/forms';
-//import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-//import { provideAuth, getAuth } from '@angular/fire/auth';
-//import { provideDatabase, getDatabase } from '@angular/fire/database';
-//import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-
 import { AngularFireModule } from '@angular/fire/compat';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { MatMenuModule } from '@angular/material/menu';
-
 import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -55,11 +47,13 @@ import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-ha
 import { DialogTaskGeneralComponent } from './dialog-task-general/dialog-task-general.component';
 import { DialogTaskEvaluationComponent } from './dialog-task-evaluation/dialog-task-evaluation.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DataService } from 'src/services/data.servie';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
+    OverViewComponent,
     UserComponent,
     DialogAddLocationComponent,
     UserDetailComponent,
@@ -83,7 +77,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     DialogTaskHarvestComponent,
     DialogEditHarvestComponent,
     DialogTaskGeneralComponent,
-    DialogTaskEvaluationComponent
+    DialogTaskEvaluationComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,8 +104,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatCardModule,
     MatMenuModule,
     MatCheckboxModule
+    
   ],
-  providers: [],
+  providers: [ DataService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
