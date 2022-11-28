@@ -2,7 +2,7 @@ import { Task } from "./task.class";
 import { GeneralTask} from "./generaltask.class";
 
 export class Entries {
-    date: Number;
+    date: Date;
     description: string;
     task: Task[];
     generalTask: GeneralTask[];

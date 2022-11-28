@@ -30,9 +30,7 @@ export class DialogAddLocationComponent implements OnInit {
         this.loading = false;
         this.dialogRef.close();
       });
-   
   }
-
 }
 
 

@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
 import { TaskFeed } from 'src/models/taskFeed.class';
-import { MatSelectModule } from '@angular/material/select';
+import { DataService } from 'src/services/data.servie';
 
 @Component({
   selector: 'app-dialog-task-feeding',
@@ -17,15 +17,13 @@ export class DialogTaskFoodComponent implements OnInit {
 
   feedingCustomId = '';
   loading = false;
-  locationId = '';
-  beecolonyId = '';
-  entrieId = '';
+
   taskFeeds = [];
   selectedValue = new TaskFeed();
   saveValue = new Task();
   amount: number;
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskFoodComponent>) { }
+  constructor(public data: DataService, private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskFoodComponent>) { }
 
   ngOnInit(): void {
     if (this.feedingCustomId) {
@@ -50,11 +48,11 @@ export class DialogTaskFoodComponent implements OnInit {
     if (this.feedingCustomId) {
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId )
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('tasks')
         .doc(this.feedingCustomId)
         .update(this.task.toJSON())
@@ -68,11 +66,11 @@ export class DialogTaskFoodComponent implements OnInit {
     else {
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId )
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('tasks')
         .add(this.task.toJSON())
         .then((result: any) => {

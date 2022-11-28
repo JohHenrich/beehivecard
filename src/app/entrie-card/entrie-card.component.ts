@@ -1,9 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Entries } from 'src/models/entries.class';
 import { Task } from 'src/models/task.class';
+import { GeneralTask } from 'src/models/generaltask.class';
+import { DataService } from 'src/services/data.servie';
+import { FireService } from 'src/services/fire.service';
 
 
 
@@ -15,88 +18,74 @@ import { Task } from 'src/models/task.class';
 export class EntrieCardComponent implements OnInit {
   @Input()
   entrieId = '';
-  entrie = new Entries();
+  entrie: any = [];
   entrieDate: Date;
-
-  allTasks = [];
-  generalEntries = [];
-  generalList = [];
+  test = new GeneralTask();
+  allTasks: any = [];
+  allGeneralTask: any = [];
+  generalList: any = [];
   dataList = [];
   generalData: boolean = false;
-  locationId = '';
-  beecolonyId = '';
 
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
+  constructor(private fire: FireService,private cdr: ChangeDetectorRef,public data: DataService, private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
 
     this.route.paramMap.subscribe(paramMap => {
-      this.beecolonyId = paramMap.get('id');
-      this.beecolonyId = this.beecolonyId.slice(20, 40);
-      this.locationId = paramMap.get('id');
-      this.locationId = this.locationId.slice(0, 20);
+      this.data.currentBecoloneyId = paramMap.get('id').slice(20, 40);
+      this.data.currentLocationId = paramMap.get('id').slice(0, 20);
+    })
+    //this.data.currentEntrieId = this.entrieId;
+
+    this.fire.getEntrie(this.entrieId).subscribe((entrieData: any) => {
+      this.entrie = entrieData;
+      this.entrieDate = this.entrie.date.toDate();
+    });
+
+
+
+    this.fire.getTasks(this.entrieId).subscribe((taskData: any) => {
+      this.allTasks = taskData;
+      
+    });
+
+    this.fire.getGeneralEntries(this.entrieId).subscribe((generalTask: any) => {
+      this.allGeneralTask = generalTask;
+      this.convertData();
+
     })
 
-    this.entrieDate = new Date(Number(this.entrie.date));
-
-
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entrieId)
-      .collection('tasks')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((tasks: any) => {
-        this.allTasks = tasks;
-        console.log('allTasks: ', this.allTasks);
-      })
-
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entrieId)
-      .collection('generalEntries')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((generalEntries: any) => {
-        this.generalEntries = generalEntries;
-        this.convertData();
-      })
 
   }
 
   convertData() {
-    this.generalList = Object.keys(this.generalEntries[0]);
-    if (this.generalList.length > 0) {
+
+    if (this.allGeneralTask.length > 0) {
+      this.generalList = Object.keys(this.allGeneralTask[0]);
       this.generalData = true;
+
+
+      Object.entries(this.allGeneralTask[0]).forEach(entry => {
+        const [key, value] = entry;
+        if (key != "customIdName") {
+          this.dataList.push(value);
+        }
+
+      });
+      this.dataList.splice(10);
+      this.generalList.splice(10);
     }
 
-
-    Object.entries(this.generalEntries[0]).forEach(entry => {
-      const [key, value] = entry;
-      if (key != "customIdName") {
-        this.dataList.push(value);
-      }
-
-    });
-    this.dataList.splice(10);
-    this.generalList.splice(10)
   }
-
 
 
   deleteTask() {
     this.firestore
       .collection('locations')
-      .doc(this.locationId)
+      .doc(this.data.currentLocationId)
       .collection('beecolonys')
-      .doc(this.beecolonyId)
+      .doc(this.data.currentBecoloneyId)
       .collection('entries')
       .doc(this.entrieId)
       .delete();

@@ -12,13 +12,7 @@ export class OverViewComponent implements OnInit {
 
   ngOnInit(): void {
    
-      this.firestore
-      .collection('locations')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((changes: any) => {
-        console.log('GetLoc', changes);
-        this.data.allLocations = changes;
-      })
+
 
   
   }

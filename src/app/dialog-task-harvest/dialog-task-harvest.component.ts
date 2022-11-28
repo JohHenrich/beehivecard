@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Beecolony } from 'src/models/beecolony.class';
-import { Entries } from 'src/models/entries.class';
+import {  MatDialogRef} from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
+import { DataService } from 'src/services/data.servie';
 
 @Component({
   selector: 'app-dialog-task-harvest',
@@ -16,9 +15,7 @@ export class DialogTaskHarvestComponent implements OnInit {
   allEntries = []; ///
   entrieDate!: Date;
   loading = false;
-  locationId = '';
-  beecolonyId = '';
-  entrieId = '';
+
   havestCustomId = '';
   taskTreatments = [];
 
@@ -27,7 +24,7 @@ export class DialogTaskHarvestComponent implements OnInit {
   combs: number;
   unit = 'kg';
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskHarvestComponent>) { }
+  constructor(public data: DataService, private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskHarvestComponent>) { }
 
   ngOnInit(): void {
     if (!this.havestCustomId) {
@@ -44,11 +41,11 @@ export class DialogTaskHarvestComponent implements OnInit {
       this.dataTask = new Task(this.saveValue);
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId)
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('tasks')
         .doc(this.havestCustomId)
         .update(this.dataTask.toJSON())
@@ -61,11 +58,11 @@ export class DialogTaskHarvestComponent implements OnInit {
     else {
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId)
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('tasks')
         .add(this.saveValue.toJSON())
         .then((result: any) => {

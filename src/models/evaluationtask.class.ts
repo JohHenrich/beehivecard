@@ -29,7 +29,7 @@ export class EvaluationTask {
             pens: this.pens,
             varroaInfestation: this.varroaInfestation,
             bootyWeight: this.bootyWeight,
-            note: this.note,
+            note: this.note
 
         }
     }

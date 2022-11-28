@@ -7,7 +7,7 @@ import { BeecolonysComponent } from '../beecolonys/beecolonys.component';
 import { DialogAddLocationComponent } from '../dialog-add-location/dialog-add-location.component';
 import { DialogEditLocationComponent } from '../dialog-edit-location/dialog-edit-location.component';
 import { DataService } from 'src/services/data.servie';
-
+import { FireService } from 'src/services/fire.service';
 
 @Component({
   selector: 'app-locations',
@@ -20,10 +20,10 @@ import { DataService } from 'src/services/data.servie';
 export class LocationsComponent implements OnInit {
 
 
-  constructor(private cdr: ChangeDetectorRef, public data: DataService, public dialog: MatDialog, private firestore: AngularFirestore) { }
+  constructor(private fire: FireService, private cdr: ChangeDetectorRef, public data: DataService, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
-  ngOnInit(): void {
-
+  ngOnInit(): void {     
+    this.fire.getLocations();
   }
 
 

@@ -29,7 +29,7 @@ export class BeecolonysComponent implements OnInit {
       this.data.currentLocationId = paramMap.get('id');
       this.fire.getLocation();
       this.fire.getBeecoloneys();
-   
+      this.cdr.detectChanges();
     })
       
   }
@@ -38,7 +38,7 @@ export class BeecolonysComponent implements OnInit {
   openAddDialog() {
     const dialog = this.dialog.open(DialogAddBeecolonyComponent);
     //dialog.componentInstance.locations[this.locationId] = new Locations(this.locations[this.locationId].beecolonys[this.allBeecolonys.length].toJSON);
-    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.locationId = this.data.currentLocationId ;
 
   }
 

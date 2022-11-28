@@ -44,5 +44,11 @@ export class AppComponent {
 
   setBeecoloneyId(customIdName) {
     this.data.currentBecoloneyId = customIdName;
+    this.fire.getBeecoloney();
+    this.fire.getEntries().subscribe((entriesData: any) => {
+      this.data.allEntries = entriesData;
+      this.cdr.detectChanges();
+    });
+    
   }
 }

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Beecolony } from 'src/models/beecolony.class';
-import { Entries } from 'src/models/entries.class';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
 import { EvaluationTask } from 'src/models/evaluationtask.class';
-
+import { DataService } from 'src/services/data.servie';
 
 @Component({
   selector: 'app-dialog-task-evaluation',
@@ -18,16 +16,15 @@ export class DialogTaskEvaluationComponent implements OnInit {
   allEntries = []; ///
   entrieDate!: Date;
   loading = false;
-  locationId = '';
-  beecolonyId = '';
-  entrieId = '';
+ 
+
   evaluationEntries: EvaluationTask = new EvaluationTask();
   evaluationCustomId = '';
   taskTreatments = [];
   
 
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskEvaluationComponent>) { }
+  constructor(public data: DataService, private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskEvaluationComponent>) { }
 
   ngOnInit(): void {
  
@@ -40,11 +37,11 @@ export class DialogTaskEvaluationComponent implements OnInit {
     if (this.evaluationCustomId) {
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId)
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('evaluationTask')
         .doc(this.evaluationCustomId)
         .update(this.evaluationEntries.toJSON())
@@ -58,11 +55,11 @@ export class DialogTaskEvaluationComponent implements OnInit {
     else {
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId)
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('evaluationTask')
         .add(this.evaluationEntries.toJSON())
         .then((result: any) => {

@@ -1,9 +1,9 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Task } from 'src/models/task.class';
+import { MatDialogRef } from '@angular/material/dialog';
 import { TaskTreatment } from 'src/models/taskTreatment.class';
+
 
 @Component({
   selector: 'app-dialog-new-treatment',

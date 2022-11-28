@@ -4,13 +4,13 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #addressMenu="matMenu">
-        <button mat-menu-item [routerLink]= "['/entrie/' + locationId  +  beecolonyId + entrieId]">Edit entrie</button>
+        <button mat-menu-item [routerLink]= "['/entrie/' + data.currentLocationId  + data.currentBecoloneyId + entrieId]">Edit entrie</button>
         <button mat-menu-item (click)="deleteTask()"> Delete entrie</button>
     </mat-menu>
 
 
     <mat-card-content>
-        {{ entrieDate | date:'dd/MM/yy'}} {{ entrie.description }}
+        {{ entrieDate  | date:'dd/MM/yy'}} {{ entrie.description }}
         <div>
         
             <table class="table">
@@ -27,7 +27,7 @@
         
             </table>  
             <table class="table">
-                <tr  *ngIf="generalData">
+                <tr  *ngIf="!allGeneralTask">
                     <th>Type</th>
                     <th>Amount</th>
                 </tr>

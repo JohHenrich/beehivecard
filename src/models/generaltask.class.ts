@@ -38,7 +38,7 @@ export class  GeneralTask {
             framehive: this.framehive,
             beeescape: this.beeescape,
             barricade: this.barricade,
-            diaper: this.diaper,
+            diaper: this.diaper
         }
     }
 

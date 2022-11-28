@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialogRef } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
 import { TaskTreatment } from 'src/models/taskTreatment.class';
-import { MatSelectModule } from '@angular/material/select';
+import { DataService } from 'src/services/data.servie';
 
 
 @Component({
@@ -18,16 +17,14 @@ export class DialogTaskTreatmentComponent implements OnInit {
   allEntries = []; ///
   entrieDate!: Date;
   loading = false;
-  locationId = '';
-  beecolonyId = '';
-  entrieId = '';
+  
   treatmentCustomId = '';
   taskTreatments = [];
   selectedValue = new TaskTreatment();
   saveValue = new Task();
   amount: number;
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskTreatmentComponent>) { }
+  constructor(public data: DataService, private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskTreatmentComponent>) { }
 
   ngOnInit(): void {
     if(this.treatmentCustomId){
@@ -52,13 +49,13 @@ export class DialogTaskTreatmentComponent implements OnInit {
     if (this.treatmentCustomId) {
       this.saveValue = new Task(this.task);
       this.firestore
-        .collection('locations')
-        .doc(this.locationId)
-        .collection('beecolonys')
-        .doc(this.beecolonyId)
-        .collection('entries')
-        .doc(this.entrieId)
-        .collection('tasks')
+      .collection('locations')
+      .doc(this.data.currentLocationId)
+      .collection('beecolonys')
+      .doc(this.data.currentBecoloneyId)
+      .collection('entries')
+      .doc(this.data.currentEntrieId)
+      .collection('tasks')
         .doc(this.treatmentCustomId)
         .update(this.saveValue[0].toJSON())
         .then((result: any) => {
@@ -72,11 +69,11 @@ export class DialogTaskTreatmentComponent implements OnInit {
   else {
     this.firestore
     .collection('locations')
-    .doc(this.locationId)
+    .doc(this.data.currentLocationId)
     .collection('beecolonys')
-    .doc(this.beecolonyId)
+    .doc(this.data.currentBecoloneyId)
     .collection('entries')
-    .doc(this.entrieId)
+    .doc(this.data.currentEntrieId)
     .collection('tasks')
     .add(this.task.toJSON())
     .then((result: any) => {

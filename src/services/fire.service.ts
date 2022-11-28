@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+import { Beecolony } from 'src/models/beecolony.class';
 import { Locations } from 'src/models/location.class';
 import { DataService } from './data.servie';
 
@@ -9,6 +11,10 @@ import { DataService } from './data.servie';
     providedIn: 'root'
 })
 export class FireService {
+
+    allTasks: any = [];
+    allGeneralEntries: any = [];
+    entrie: any = [];
 
     location = [];
 
@@ -21,8 +27,8 @@ export class FireService {
             .doc(this.data.currentLocationId)
             .valueChanges({ idField: 'customIdName' })
             .subscribe((location: any) => {
-                this.data.location = new  Locations(location);
-                
+                this.data.location = new Locations(location);
+
             })
         console.log('Name:', this.location)
     }
@@ -33,19 +39,98 @@ export class FireService {
             .valueChanges({ idField: 'customIdName' })
             .subscribe((location: any) => {
                 this.data.allLocations = location;
-                
+
             })
         console.log('Name:', this.location)
     }
+
+    getBeecoloney() {
+        this.firestore
+            .collection('locations')
+            .doc(this.data.currentLocationId)
+            .collection('beecolonys')
+            .doc(this.data.currentBecoloneyId)
+            .valueChanges({ idField: 'customIdName' })
+            .subscribe((beecolony: any) => {
+                console.log(beecolony);
+                this.data.beecolony = new Beecolony(beecolony);
+            })
+    }
+
     getBeecoloneys() {
         this.firestore
             .collection('locations')
             .doc(this.data.currentLocationId)
             .collection('beecolonys')
             .valueChanges({ idField: 'customIdName' })
-            .subscribe((beecolony: any) => {
-                console.log(beecolony);
-                this.data.allBecoloneys = beecolony;
+            .subscribe((beecolonys: any) => {
+                console.log(beecolonys);
+                this.data.allBecoloneys = beecolonys;
             })
+    }
+
+
+    getEntrie(entrieId) {
+        return this.firestore
+            .collection('locations')
+            .doc(this.data.currentLocationId)
+            .collection('beecolonys')
+            .doc(this.data.currentBecoloneyId)
+            .collection('entries')
+            .doc(entrieId)
+            .valueChanges({ idField: 'customIdName' });
+
+
+
+    }
+
+
+    getEntries() {
+        return this.firestore
+            .collection('locations')
+            .doc(this.data.currentLocationId)
+            .collection('beecolonys')
+            .doc(this.data.currentBecoloneyId)
+            .collection('entries')
+            .valueChanges({ idField: 'customIdName' })
+
+
+    }
+
+
+    getTasks(entrieId: string) {
+        return this.firestore
+            .collection('locations')
+            .doc(this.data.currentLocationId)
+            .collection('beecolonys')
+            .doc(this.data.currentBecoloneyId)
+            .collection('entries')
+            .doc(entrieId)
+            .collection('tasks')
+            .valueChanges({ idField: 'customIdName' });
+    }
+
+    getGeneralEntries(entrieId) {
+        return this.firestore
+            .collection('locations')
+            .doc(this.data.currentLocationId)
+            .collection('beecolonys')
+            .doc(this.data.currentBecoloneyId)
+            .collection('entries')
+            .doc(entrieId)
+            .collection('generalEntries')
+            .valueChanges({ idField: 'customIdName' })
+    }
+    
+    getEvaluationTask(entrieId) {
+        return this.firestore
+            .collection('locations')
+            .doc(this.data.currentLocationId)
+            .collection('beecolonys')
+            .doc(this.data.currentBecoloneyId)
+            .collection('entries')
+            .doc(entrieId)
+            .collection('evaluationTask')
+            .valueChanges({ idField: 'customIdName' })
     }
 }

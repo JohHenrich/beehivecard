@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GeneralTask } from 'src/models/generaltask.class';
+import { DataService } from 'src/services/data.servie';
 
 @Component({
   selector: 'app-dialog-task-general',
@@ -13,15 +14,12 @@ export class DialogTaskGeneralComponent implements OnInit {
 
 
   loading = false;
-  locationId = '';
-  beecolonyId = '';
-  entrieId = '';
-
+ 
   generalList = [];
   saveValue: number[] = [];
   generalTask;
   savelTask = new GeneralTask();
-  constructor(private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskGeneralComponent>) { }
+  constructor(public data: DataService, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogTaskGeneralComponent>) { }
 
   ngOnInit(): void {
 
@@ -126,11 +124,11 @@ export class DialogTaskGeneralComponent implements OnInit {
 
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId)
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('generalEntries')
         .doc(this.customIdName)
         .update(this.saveTask[0].toJSON())
@@ -144,11 +142,11 @@ export class DialogTaskGeneralComponent implements OnInit {
 
       this.firestore
         .collection('locations')
-        .doc(this.locationId)
+        .doc(this.data.currentLocationId)
         .collection('beecolonys')
-        .doc(this.beecolonyId)
+        .doc(this.data.currentBecoloneyId)
         .collection('entries')
-        .doc(this.entrieId)
+        .doc(this.data.currentEntrieId)
         .collection('generalEntries')
         .add(this.saveTask[0].toJSON())
         .then((result: any) => {

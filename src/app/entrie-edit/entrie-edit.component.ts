@@ -13,6 +13,9 @@ import { DialogTaskEvaluationComponent } from '../dialog-task-evaluation/dialog-
 import { Task } from 'src/models/task.class';
 import { GeneralTask } from 'src/models/generaltask.class';
 import { EvaluationTask } from 'src/models/evaluationtask.class';
+import { DataService } from 'src/services/data.servie';
+import { FireService } from 'src/services/fire.service';
+
 
 @Component({
   selector: 'app-entrie-edit',
@@ -21,9 +24,7 @@ import { EvaluationTask } from 'src/models/evaluationtask.class';
 })
 export class EntrieEditComponent implements OnInit {
   beecolony: Beecolony = new Beecolony();
-  locationId = '';
-  beecolonyId = '';
-  entriesId = '';
+
 
   entries: Entries = new Entries();
   allEntries = [];
@@ -38,7 +39,7 @@ export class EntrieEditComponent implements OnInit {
   feedingData: boolean = false;
   treatmentData: boolean = false;
   havestData: boolean = false;
-  
+
   dataList = [];
   evaluationEntries: EvaluationTask = new EvaluationTask();
   evaluationList = [];
@@ -46,126 +47,63 @@ export class EntrieEditComponent implements OnInit {
   evaluationCustomId = '';
   evaluationData: boolean = false;
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
+  constructor(private fire: FireService, public data: DataService, private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      this.beecolonyId = paramMap.get('id');
-      this.beecolonyId = this.beecolonyId.slice(20, 40);
-      this.locationId = paramMap.get('id');
-      this.locationId = this.locationId.slice(0, 20);
-      this.entriesId = paramMap.get('id');
-      this.entriesId = this.entriesId.slice(40, 60);
+
+      this.data.currentLocationId = paramMap.get('id').slice(0, 20);
+      this.data.currentBecoloneyId = paramMap.get('id').slice(20, 40);
+      this.data.currentEntrieId = paramMap.get('id').slice(40, 60);
+
     })
-    this.getBecolony();
-    this.getEntries();
-    this.getTasks();
-    this.getGeneral();
-    this.getEvaluationTask();
+    this.fire.getBeecoloney();
+    //this.getBecolony();
 
+    this.fire.getEntrie(this.data.currentEntrieId).subscribe((entries: any) => {
+      this.entries = new Entries(entries);
+      console.log('Entries Des.:', this.entries);
+      this.entrieDate = new Date(Number(this.entries.date));
+    })
+    //this.getEntries();
 
-  }
-  getBecolony() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .valueChanges()
-      .subscribe((beecolony: any) => {
-        console.log(beecolony);
-        this.beecolony = new Beecolony(beecolony);
-        console.log('Name:', this.beecolony.name);
-      })
-    //console.log('Name:', this.locations)
-  }
+    this.fire.getTasks(this.data.currentEntrieId).subscribe((alltasks: any) => {
+      console.log(alltasks);
+      this.allTasks = alltasks;
+      this.getTaskData();
+    })
 
-  getEntries() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entriesId)
-      .valueChanges()
-      .subscribe((entries: any) => {
-        this.entries = new Entries(entries);
-        console.log('Entries Des.:', this.entries);
-        this.entrieDate = new Date(Number(this.entries.date));
-      })
+    this.fire.getTasks(this.data.currentEntrieId).subscribe((alltasks: any) => {
+      console.log(alltasks);
+      this.allTasks = alltasks;
+      this.getTaskData();
+    });
+    //this.getTasks();
 
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entriesId)
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((entries: any) => {
+    this.fire.getGeneralEntries(this.data.currentEntrieId).subscribe((generalEntries: any) => {
+      this.generalEntries = new GeneralTask(generalEntries[0]);
+      console.log('generalEntries: ', this.generalEntries);
+      if (generalEntries.length != 0) {
+        this.generalCustomId = generalEntries[0].customIdName;
+        this.convertGeneralData();
+      }
+    });
+    //this.getGeneral();
 
-        this.allEntries = entries;
-        console.log('allEntries:', this.allEntries);
-
-      })
-    //console.log('Name:', this.locations)
-  }
-
-  getTasks() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entriesId)
-      .collection('tasks')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((alltasks: any) => {
-        console.log(alltasks);
-        this.allTasks = alltasks;
-        this.getTaskData();
-      })
-  }
-
-  getGeneral() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entriesId)
-      .collection('generalEntries')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((generalEntries: any) => {
-        this.generalEntries = new GeneralTask(generalEntries[0]);
-        console.log('generalEntries: ', this.generalEntries);
-        if (generalEntries.length != 0) {
-          this.generalCustomId = generalEntries[0].customIdName;
-          this.convertGeneralData();
-        }
-      })
-  }
-
-  getEvaluationTask() {
-    this.firestore
-      .collection('locations')
-      .doc(this.locationId)
-      .collection('beecolonys')
-      .doc(this.beecolonyId)
-      .collection('entries')
-      .doc(this.entriesId)
-      .collection('evaluationTask')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((evaluationEntries: any) => {
+    this.fire.getEvaluationTask(this.data.currentEntrieId).subscribe((evaluationEntries: any) => {
+      if (evaluationEntries) {
         this.evaluationEntries = new EvaluationTask(evaluationEntries[0]);
         console.log('allTasks: ', this.evaluationEntries);
         this.evaluationCustomId = evaluationEntries[0].customIdName;
         this.convertEvalutionData();
-      })
+      }
+    });
+   // this.getEvaluationTask();
+
+
   }
+
+
 
   getTaskData() {
     for (let index = 0; index < this.allTasks.length; index++) {
@@ -183,6 +121,8 @@ export class EntrieEditComponent implements OnInit {
 
   }
 
+
+
   convertGeneralData() {
     this.generalList = Object.keys(this.generalEntries);
     if (this.generalList.length > 0) {
@@ -199,6 +139,8 @@ export class EntrieEditComponent implements OnInit {
 
   }
 
+
+
   convertEvalutionData() {
     this.evaluationList = Object.keys(this.evaluationEntries);
     if (this.evaluationList.length > 0) {
@@ -214,8 +156,6 @@ export class EntrieEditComponent implements OnInit {
     });
 
   }
-
-
 
 
   editTask(task: Task, treatment, customIdName) {
@@ -239,65 +179,53 @@ export class EntrieEditComponent implements OnInit {
     }
 
   }
+
+
   deleteTask(customIdName) {
     this.firestore
       .collection('locations')
-      .doc(this.locationId)
+      .doc(this.data.currentLocationId)
       .collection('beecolonys')
-      .doc(this.beecolonyId)
+      .doc(this.data.currentBecoloneyId)
       .collection('entries')
-      .doc(this.entriesId)
+      .doc(this.data.currentEntrieId)
       .collection('tasks')
       .doc(customIdName)
       .delete();
 
   }
 
+
   openDialogeAddTaskFeeding() {
     const dialog = this.dialog.open(DialogTaskFoodComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
+
   }
+
+
   openDialogeEditFeeding(task: Task, customIdName) {
     const dialog = this.dialog.open(DialogTaskFoodComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
     dialog.componentInstance.feedingCustomId = customIdName;
     dialog.componentInstance.task = task;
   }
 
   openDialogeAddTaskTreatment() {
     const dialog = this.dialog.open(DialogTaskTreatmentComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
-
   }
 
+
   openDialogeEditTaskTreatment(task: Task, customIdName) {
-    const dialog = this.dialog.open(DialogTaskTreatmentComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
-    dialog.componentInstance.task = task;
+    const dialog = this.dialog.open(DialogTaskTreatmentComponent);    dialog.componentInstance.task = task;
     dialog.componentInstance.treatmentCustomId = customIdName;
   }
 
+
   openDialogeAddTaskHarvest() {
     const dialog = this.dialog.open(DialogTaskHarvestComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
-
   }
+
 
   openDialogeEditTaskHarvest(task: Task, customIdName) {
     const dialog = this.dialog.open(DialogTaskHarvestComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
     dialog.componentInstance.havestCustomId = customIdName;
     dialog.componentInstance.saveValue = task;
   }
@@ -305,35 +233,23 @@ export class EntrieEditComponent implements OnInit {
 
   openDialogeAddTaskGeneral() {
     const dialog = this.dialog.open(DialogTaskGeneralComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
     dialog.componentInstance.generalTask = this.generalEntries;
   }
 
 
   openDialogeEditTaskGeneral() {
     const dialog = this.dialog.open(DialogTaskGeneralComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
     dialog.componentInstance.generalTask = this.generalEntries;
     dialog.componentInstance.customIdName = this.generalCustomId;
   }
 
   openDialogeAddTaskEvaluation() {
     const dialog = this.dialog.open(DialogTaskEvaluationComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
   }
 
 
   openDialogeEditTaskEvaluation() {
     const dialog = this.dialog.open(DialogTaskEvaluationComponent);
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.entrieId = this.entriesId;
     dialog.componentInstance.evaluationEntries = this.evaluationEntries;
     dialog.componentInstance.evaluationCustomId = this.evaluationCustomId;
   }

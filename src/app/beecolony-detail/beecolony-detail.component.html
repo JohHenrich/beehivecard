@@ -9,15 +9,15 @@
 
     <img mat-card-avatar src="./assets/img/beecolony.png">
     <div class="beecolony-details">
-        <h2>{{ beecolony.name }} <br>{{ beecolony.description}}</h2>
-        {{ beecolony.position }}
+        <h2>{{ data.beecolony.name }} <br>{{ data.beecolony.description}}</h2>
+        {{ data.beecolony.position }}
     </div>
 
 </mat-card>
 <mat-card>
     <mat-card-title>Entries</mat-card-title>
 
-    <div *ngFor="let entrie of allEntries">
+    <div *ngFor="let entrie of data.allEntries">
         <app-entrie-card [entrieId]="entrie.customIdName"></app-entrie-card>
     </div>
 </mat-card>
