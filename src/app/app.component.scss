@@ -1,18 +1,18 @@
-.mat-drawer-container{
+.mat-drawer-container {
     height: 100vh;
 }
 
-.menue-icon{
+.menue-icon {
     cursor: pointer;
 }
 
-.sidenav{
+.sidenav {
     width: 300px;
-   
+
 }
 
-.logo-container{
-    border-bottom: 1px solid rgba( 0,0,0,0.4);
+.logo-container {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
     padding-left: 16px;
     padding-right: 16px;
     min-height: 56px;
@@ -20,19 +20,21 @@
     align-items: center;
 }
 
-mat-toolbar ,mat-toolbar-row{
+mat-toolbar,
+mat-toolbar-row {
     min-height: 56px;
-    height: 56px ;
+    height: 56px;
 }
 
 
-.menu-items{
+.menu-items {
     list-style-type: none;
     padding: 0;
     margin: 0;
 
 
-    li, p{
+    li,
+    p {
         padding-left: 16px;
         padding-right: 16px;
         height: 48px;
@@ -40,24 +42,44 @@ mat-toolbar ,mat-toolbar-row{
         align-items: center;
         cursor: pointer;
 
-        mat-icon{
+        mat-icon {
             margin-right: 16px;
         }
 
 
     }
-    li{
-        &:hover{
-            background-color: rgba( 0,0,0,0.4);
-        }  
+
+    li {
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+       
+    }
+
+    ul {
+        .icon{
+            display: flex;
+            align-items: center;
+        }
         
-        &:focus{
-            outline: none; 
+   
+        img {
+        
+            height: 28px;
+            width: 28px;
         }
     }
+
 }
 
-.router-container{
+
+
+.router-container {
     padding-left: 56px;
     padding-right: 56px;
     padding-top: 16px;

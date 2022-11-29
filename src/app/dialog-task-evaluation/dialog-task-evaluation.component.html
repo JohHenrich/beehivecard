@@ -15,7 +15,7 @@
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Verroa Infestation</mat-label>
                 <input [disabled]="loading" [(ngModel)]="evaluationEntries.varroaInfestation" matInput placeholder="Amount">
-
+                <span matSuffix>mites per day</span> 
             </mat-form-field>
         </div>
 
@@ -23,7 +23,7 @@
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Booty weight</mat-label>
                 <input [disabled]="loading" [(ngModel)]="evaluationEntries.bootyWeight" matInput placeholder="Amount">
-
+                <span matSuffix>kg</span> 
             </mat-form-field>
         </div>
 

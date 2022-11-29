@@ -4,15 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Beecolony } from 'src/models/beecolony.class';
 import { Entries } from 'src/models/entries.class';
-import { DialogTaskFoodComponent } from '../dialog-task-feeding/dialog-task-feeding.component';
-import { DialogTaskTreatmentComponent } from '../dialog-task-treatment/dialog-task-treatment.component';
-import { DialogTaskHarvestComponent } from '../dialog-task-harvest/dialog-task-harvest.component';
-import { DialogEditHarvestComponent } from '../dialog-edit-harvest/dialog-edit-harvest.component';
-import { DialogTaskGeneralComponent } from '../dialog-task-general/dialog-task-general.component';
-import { DialogTaskEvaluationComponent } from '../dialog-task-evaluation/dialog-task-evaluation.component';
 import { Task } from 'src/models/task.class';
 import { GeneralTask } from 'src/models/generaltask.class';
 import { EvaluationTask } from 'src/models/evaluationtask.class';
+import { DialogTaskFoodComponent } from '../dialog-task-feeding/dialog-task-feeding.component';
+import { DialogTaskTreatmentComponent } from '../dialog-task-treatment/dialog-task-treatment.component';
+import { DialogTaskHarvestComponent } from '../dialog-task-harvest/dialog-task-harvest.component';
+import { DialogTaskGeneralComponent } from '../dialog-task-general/dialog-task-general.component';
+import { DialogTaskEvaluationComponent } from '../dialog-task-evaluation/dialog-task-evaluation.component';
 import { DataService } from 'src/services/data.servie';
 import { FireService } from 'src/services/fire.service';
 
@@ -25,8 +24,6 @@ import { FireService } from 'src/services/fire.service';
 export class EntrieEditComponent implements OnInit {
   beecolony: Beecolony = new Beecolony();
 
-
-  entries: Entries = new Entries();
   allEntries = [];
   entrieDate: Date;
   allBeecolonys = [];
@@ -61,17 +58,12 @@ export class EntrieEditComponent implements OnInit {
     //this.getBecolony();
 
     this.fire.getEntrie(this.data.currentEntrieId).subscribe((entries: any) => {
-      this.entries = new Entries(entries);
-      console.log('Entries Des.:', this.entries);
-      this.entrieDate = new Date(Number(this.entries.date));
+      //this.entries = new Entries(entries);
+      console.log('Entries Des.:', entries);
+      this.entrieDate = entries.date.toDate();
+      //this.entrieDate = new Date(Number(entries.date));
     })
     //this.getEntries();
-
-    this.fire.getTasks(this.data.currentEntrieId).subscribe((alltasks: any) => {
-      console.log(alltasks);
-      this.allTasks = alltasks;
-      this.getTaskData();
-    })
 
     this.fire.getTasks(this.data.currentEntrieId).subscribe((alltasks: any) => {
       console.log(alltasks);
@@ -169,7 +161,7 @@ export class EntrieEditComponent implements OnInit {
 
         break
 
-      case 'Honey harvest':
+      case 'Harvest':
         this.openDialogeEditTaskHarvest(task, customIdName);
 
         break

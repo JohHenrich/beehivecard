@@ -85,7 +85,8 @@
         </tr>
         <tr *ngFor="let evaluationEntrie of evaluationList; let i = index">
             <td>{{ evaluationEntrie }}</td>
-            <td>{{ this.evaluationListData[i] }}</td>
+            <td *ngIf="i < 4"> <mat-checkbox class="margin" [(ngModel)]="this.evaluationListData[i]" disabled></mat-checkbox></td>
+            <td *ngIf="i > 3">{{ this.evaluationListData[i] }}</td>
         </tr>
     </table>
     <div *ngIf="evaluationData" class="container-btn">

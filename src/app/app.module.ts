@@ -25,7 +25,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
 import { SettingsComponent } from './settings/settings.component';
 import { LocationsComponent } from './locations/locations.component';
@@ -43,11 +42,12 @@ import { DialogNewFoodComponent } from './dialog-new-food/dialog-new-food.compon
 import { DialogTaskTreatmentComponent } from './dialog-task-treatment/dialog-task-treatment.component';
 import { DialogNewTreatmentComponent } from './dialog-new-treatment/dialog-new-treatment.component';
 import { DialogTaskHarvestComponent } from './dialog-task-harvest/dialog-task-harvest.component';
-import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-harvest.component';
+
 import { DialogTaskGeneralComponent } from './dialog-task-general/dialog-task-general.component';
 import { DialogTaskEvaluationComponent } from './dialog-task-evaluation/dialog-task-evaluation.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DataService } from 'src/services/data.servie';
+import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-harvest.component';
 
 
 @NgModule({
@@ -57,7 +57,6 @@ import { DataService } from 'src/services/data.servie';
     UserComponent,
     DialogAddLocationComponent,
     UserDetailComponent,
-    DialogEditAddressComponent,
     DialogEditUserComponent,
     SettingsComponent,
     LocationsComponent,
@@ -75,9 +74,10 @@ import { DataService } from 'src/services/data.servie';
     DialogTaskTreatmentComponent,
     DialogNewTreatmentComponent,
     DialogTaskHarvestComponent,
-    DialogEditHarvestComponent,
+
     DialogTaskGeneralComponent,
     DialogTaskEvaluationComponent,
+    DialogEditHarvestComponent,
   ],
   imports: [
     BrowserModule,

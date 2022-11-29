@@ -18,9 +18,9 @@
       <ul  *ngFor="let location of this.data.allLocations">
         <li (click)="setLocationId(location.customIdName)" [routerLink]="['/location/' + location.customIdName]">{{location.name}}</li>
         <ng-container *ngIf="location.customIdName == this.data.currentLocationId">
-          <ul *ngFor="let beecolony of this.data.allBecoloneys"
-          (click)="setBeecoloneyId(beecolony.customIdName)"  [routerLink]="['/beecolony/' + location.customIdName + beecolony.customIdName]">
-            {{beecolony.name}}</ul>
+          <ul class="icon" *ngFor="let beecolony of this.data.allBecoloneys" 
+           (click)="setBeecoloneyId(beecolony.customIdName)"  [routerLink]="['/beecolony/' + location.customIdName + beecolony.customIdName]">
+           <img src="./assets/img/colony.ico"> {{beecolony.name}}</ul>
         </ng-container>
       </ul>
 

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'src/models/user.class';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
+
 import { DialogAddLocationComponent } from '../dialog-add-location/dialog-add-location.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 
@@ -35,11 +35,6 @@ export class UserDetailComponent implements OnInit {
       })
   }
 
-  editAddress() {
-    const dialog = this.dialog.open(DialogEditAddressComponent);
-    dialog.componentInstance.user = new User(this.user.toJSON());
-    dialog.componentInstance.userId = this.userId;
-  }
 
   editUser() {
     const dialog = this.dialog.open(DialogEditUserComponent);
