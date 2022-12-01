@@ -29,6 +29,16 @@
         &:hover{
             background-color: rgba(0, 0, 0, 0.04);
         }
+
+        .icon{
+            display: flex;
+            align-items: center;
+        }
+        img {
+        
+            height: 28px;
+            width: 28px;
+        }
     }
 
 

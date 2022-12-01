@@ -29,8 +29,7 @@ export class BeecolonyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      this.data.currentBecoloneyId = paramMap.get('id').slice(20, 40);
-      
+      this.data.currentBecoloneyId = paramMap.get('id').slice(20, 40);  
       this.data.currentLocationId = paramMap.get('id').slice(0, 20);
 
     })
@@ -45,16 +44,14 @@ export class BeecolonyDetailComponent implements OnInit {
 
   openDialogEditBeecolony() {
     const dialog = this.dialog.open(DialogEditBeecolonyComponent);
-    dialog.componentInstance.beecolony = new Beecolony(this.beecolony.toJSON());
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
-    dialog.componentInstance.locationId = this.locationId;
+    dialog.componentInstance.beecolony = this.beecolony;
+
   }
 
   openDialogAddEnrie() {
     const dialog = this.dialog.open(DialogAddEntrieComponent);
     dialog.componentInstance.entrie = new Entries(this.entries.toJSON());
-    dialog.componentInstance.locationId = this.locationId;
-    dialog.componentInstance.beecolonyId = this.beecolonyId;
+
 
   }
 }

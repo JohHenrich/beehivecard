@@ -6,7 +6,7 @@
         <div>
             <mat-form-field appearance="outline">
                 <mat-label>Name</mat-label>
-                <input [disabled]="loading" [(ngModel)]="beecolony.name" matInput placeholder="Last Name">
+                <input [disabled]="loading" [(ngModel)]="data.beecolony.name" matInput placeholder="Last Name">
 
             </mat-form-field>
         </div>
@@ -23,7 +23,7 @@
 
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Position </mat-label>
-                <input [disabled]="loading" [(ngModel)]="beecolony.position" matInput placeholder="Location">
+                <input [disabled]="loading" [(ngModel)]="data.beecolony.position" matInput placeholder="Location">
 
             </mat-form-field>
         </div>
@@ -31,13 +31,13 @@
 
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Group</mat-label>
-                <input [disabled]="loading" [(ngModel)]="beecolony.group" matInput placeholder="Group">
+                <input [disabled]="loading" [(ngModel)]="data.beecolony.group" matInput placeholder="Group">
 
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Description</mat-label>
-                <input [disabled]="loading" [(ngModel)]="beecolony.description" matInput placeholder="Description">
+                <input [disabled]="loading" [(ngModel)]="data.beecolony.description" matInput placeholder="Description">
 
             </mat-form-field>
         </div>

@@ -79,9 +79,6 @@ export class FireService {
             .collection('entries')
             .doc(entrieId)
             .valueChanges({ idField: 'customIdName' });
-
-
-
     }
 
 

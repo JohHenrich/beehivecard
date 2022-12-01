@@ -2,7 +2,7 @@ import {Entries} from "./entries.class";
 
 export class Beecolony{
     name: string;
-    birthDate: Number;
+    birthDate: Date;
     position: string;
     group: string;
     type: string;

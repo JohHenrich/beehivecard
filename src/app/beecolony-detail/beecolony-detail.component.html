@@ -7,7 +7,7 @@
         <button mat-menu-item>Delete beecolony</button>
     </mat-menu>
 
-    <img mat-card-avatar src="./assets/img/beecolony.png">
+    <img mat-card-avatar src="./assets/img/colony.ico">
     <div class="beecolony-details">
         <h2>{{ data.beecolony.name }} <br>{{ data.beecolony.description}}</h2>
         {{ data.beecolony.position }}
@@ -18,7 +18,7 @@
     <mat-card-title>Entries</mat-card-title>
 
     <div *ngFor="let entrie of data.allEntries">
-        <app-entrie-card [entrieId]="entrie.customIdName"></app-entrie-card>
+        <app-entrie-card [entrieCustomId]="entrie.customIdName"></app-entrie-card>
     </div>
 </mat-card>
 <mat-card class="container-btn">

@@ -16,7 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
@@ -48,6 +48,7 @@ import { DialogTaskEvaluationComponent } from './dialog-task-evaluation/dialog-t
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DataService } from 'src/services/data.servie';
 import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-harvest.component';
+import { DialogEditEntrieComponent } from './dialog-edit-entrie/dialog-edit-entrie.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-ha
     DialogTaskGeneralComponent,
     DialogTaskEvaluationComponent,
     DialogEditHarvestComponent,
+    DialogEditEntrieComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,7 +108,8 @@ import { DialogEditHarvestComponent } from './dialog-edit-harvest/dialog-edit-ha
     MatCheckboxModule
     
   ],
-  providers: [ DataService ],
+  providers: [ DataService,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

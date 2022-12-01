@@ -4,13 +4,13 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #addressMenu="matMenu">
-        <button mat-menu-item [routerLink]= "['/entrie/' + data.currentLocationId  + data.currentBecoloneyId + entrieId]">Edit entrie</button>
+        <button mat-menu-item (click)=" openDialogEditEnrie()">Edit entrie</button>
         <button mat-menu-item (click)="deleteTask()"> Delete entrie</button>
     </mat-menu>
 
 
-    <mat-card-content>
-        {{ entrieDate  | date:'dd/MM/yy'}} {{ entrie.description }}
+    <mat-card-content [routerLink]= "['/entrie/' + data.currentLocationId  + data.currentBecoloneyId + entrieCustomId]">
+        {{ entrieDate  | date:'dd/MM/yy'}} {{ entrie.description }} 
         <div>
         
             <table class="table">

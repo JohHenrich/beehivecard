@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Locations } from 'src/models/location.class';
+import { MatDialogRef} from '@angular/material/dialog';
 import { Beecolony } from 'src/models/beecolony.class';
 
 
@@ -16,10 +14,10 @@ export class DialogAddBeecolonyComponent implements OnInit {
 
   birthDate!: Date;
   loading = false;
-  beecolony = new Beecolony();
+  beecolony: Beecolony = new Beecolony();
   locations = '';
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogAddBeecolonyComponent>) { }
+  constructor(private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogAddBeecolonyComponent>) { }
 
   ngOnInit(): void {
 
@@ -27,7 +25,7 @@ export class DialogAddBeecolonyComponent implements OnInit {
 
   saveBeeColony() {
     this.loading = true;
-    this.beecolony.birthDate = this.birthDate.getTime();
+    this.beecolony.birthDate = this.birthDate;
     console.log(this.beecolony);
 
 

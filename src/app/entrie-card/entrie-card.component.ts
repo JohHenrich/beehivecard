@@ -7,7 +7,7 @@ import { Task } from 'src/models/task.class';
 import { GeneralTask } from 'src/models/generaltask.class';
 import { DataService } from 'src/services/data.servie';
 import { FireService } from 'src/services/fire.service';
-
+import { DialogEditEntrieComponent } from '../dialog-edit-entrie/dialog-edit-entrie.component';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { FireService } from 'src/services/fire.service';
 })
 export class EntrieCardComponent implements OnInit {
   @Input()
-  entrieId = '';
+  entrieCustomId = '';
   entrie: any = [];
   entrieDate: Date;
   test = new GeneralTask();
@@ -26,7 +26,7 @@ export class EntrieCardComponent implements OnInit {
   generalList: any = [];
   dataList = [];
   generalData: boolean = false;
-
+  
 
   constructor(private fire: FireService,private cdr: ChangeDetectorRef,public data: DataService, private route: ActivatedRoute, public dialog: MatDialog, private firestore: AngularFirestore) { }
 
@@ -36,21 +36,22 @@ export class EntrieCardComponent implements OnInit {
       this.data.currentBecoloneyId = paramMap.get('id').slice(20, 40);
       this.data.currentLocationId = paramMap.get('id').slice(0, 20);
     })
-    //this.data.currentEntrieId = this.entrieId;
+    //this.data.currentEntrieCustomId = this.entrieCustomId;
 
-    this.fire.getEntrie(this.entrieId).subscribe((entrieData: any) => {
+    this.fire.getEntrie(this.entrieCustomId).subscribe((entrieData: any) => {
       this.entrie = entrieData;
+      this.entrieCustomId = entrieData.customIdName;
       this.entrieDate = this.entrie.date.toDate();
     });
 
 
 
-    this.fire.getTasks(this.entrieId).subscribe((taskData: any) => {
+    this.fire.getTasks(this.entrieCustomId).subscribe((taskData: any) => {
       this.allTasks = taskData;
       
     });
 
-    this.fire.getGeneralEntries(this.entrieId).subscribe((generalTask: any) => {
+    this.fire.getGeneralEntries(this.entrieCustomId).subscribe((generalTask: any) => {
       this.allGeneralTask = generalTask;
       this.convertData();
 
@@ -79,6 +80,11 @@ export class EntrieCardComponent implements OnInit {
 
   }
 
+  openDialogEditEnrie() {
+    const dialog = this.dialog.open(DialogEditEntrieComponent);
+    dialog.componentInstance.entrie = new Entries(this.entrie);
+    dialog.componentInstance.currentEntrieId = this. entrieCustomId;
+  }
 
   deleteTask() {
     this.firestore
@@ -87,7 +93,7 @@ export class EntrieCardComponent implements OnInit {
       .collection('beecolonys')
       .doc(this.data.currentBecoloneyId)
       .collection('entries')
-      .doc(this.entrieId)
+      .doc(this.entrieCustomId)
       .delete();
 
   }
