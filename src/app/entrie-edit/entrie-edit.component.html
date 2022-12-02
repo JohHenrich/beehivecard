@@ -8,7 +8,7 @@
         <button mat-menu-item>Delete beecolony</button>
     </mat-menu>
 
-    <img mat-card-avatar src="./assets/img/colony.ico">
+    <img mat-card-avatar src="./assets/img/coloney_white.ico">
     <div class="beecolony-details">
         <h2>Name: {{ data.beecolony.name }} <br>Location: {{ data.beecolony.position }}</h2>
     </div>
@@ -29,7 +29,10 @@
             <th>Amount</th>
         </tr>
         <tr *ngFor="let task of allTasks">
-            <td>{{ task.header }}</td>
+            <td><img *ngIf="task.header=='Treatment'" class="small-icons" src="./assets/img/medical_4.ico" >
+                <img *ngIf="task.header=='Feeding'" class="small-icons" src="./assets/img/feeding_1.ico" >
+                <img *ngIf="task.header=='Harvest'" class="small-icons" src="./assets/img/comb.ico"></td>
+            <td>{{ task.header  }}</td>
             <td>{{ task.type }}</td>
             <td>{{ task.amount }} {{ task.unit }}</td>
             <td><mat-icon (click)="editTask(task, task.header, task.customIdName)" >edit</mat-icon>
@@ -39,17 +42,17 @@
     </table>
 
     <div class="container-btn">
-        <button *ngIf="!treatmentData" mat-fab color="primary" matTooltip="Add treatment" (click)="openDialogeAddTaskTreatment()">
-            <mat-icon>add</mat-icon>
-        </button>
+       
+            <img *ngIf="!treatmentData" class="icons" src="./assets/img/medical_4.ico" (click)="openDialogeAddTaskTreatment()">
+ 
 
-        <button *ngIf="!feedingData" mat-fab color="primary" matTooltip="Add feeding" (click)="openDialogeAddTaskFeeding()">
-            <mat-icon>add</mat-icon>
-        </button>
+        
+            <img *ngIf="!feedingData" class="icons" src="./assets/img/feeding_1.ico" (click)="openDialogeAddTaskFeeding()">
+      
 
-        <button *ngIf="!havestData" mat-fab color="primary" matTooltip="Add harvest" (click)="openDialogeAddTaskHarvest()">
-            <mat-icon>add</mat-icon>
-        </button>
+        
+            <img  *ngIf="!havestData" class="icons" src="./assets/img/comb.ico" (click)="openDialogeAddTaskHarvest()">
+   
     </div>
 </mat-card>
 

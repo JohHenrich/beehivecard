@@ -1,12 +1,12 @@
 .beecolony-detail-header {
     min-height: 75px;
     background-color: yellow;
-    color: white; 
+    color: white;
     display: flex;
     align-items: flex-end;
 
     img {
-        height:  75px;
+        height: 75px;
         width: 75px;
         object-fit: cover;
         border-radius: 100%;
@@ -14,15 +14,30 @@
 
 }
 
-.beecolony-details{
+.icons {
+    z-index: 10;
+    height: 75px;
+    width: 75px;
+    margin-left: 24px;
+    margin-right: 24px;
+    z-index: 10;
+}
+
+table tr td:first-child {
+    width: 38px;
+    
+  
+  }
+
+.beecolony-details {
     margin-left: 24px;
     display: flex;
     flex-direction: column;
-    align-items:flex-start;
+    align-items: flex-start;
     justify-content: center;
     height: 75px;
 
-    h2{
+    h2 {
         margin-bottom: 0;
     }
 }
@@ -50,12 +65,12 @@
     bottom: 96px;
 }
 
-.button{
+.button {
     padding: 8px;
 
 }
 
 .container-btn {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
 }

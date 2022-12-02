@@ -15,11 +15,15 @@
         
             <table class="table">
                 <tr *ngIf="!allTasks">
+                    
                     <th>Task-type</th>
                     <th>Description</th>
                     <th>Amount</th>
                 </tr>
                 <tr *ngFor="let task of allTasks" >
+                    <td class="iconTr"><img *ngIf="task.header=='Treatment'" class="small-icons" src="./assets/img/medical_4.ico" >
+                        <img *ngIf="task.header=='Feeding'" class="small-icons" src="./assets/img/feeding_1.ico" >
+                        <img *ngIf="task.header=='Harvest'" class="small-icons" src="./assets/img/comb.ico"></td>
                     <td>{{ task.header }}</td>
                     <td>{{ task.description }}</td>
                     <td>{{ task.amount }}{{ task.unit }}</td>
