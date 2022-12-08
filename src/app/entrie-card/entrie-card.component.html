@@ -1,6 +1,5 @@
 <mat-card class="mt-24">
-    <button mat-icon-button mat-button class="mat-icon-button" [matMenuTriggerFor]="addressMenu"
-        aria-label="Menue">
+    <button mat-icon-button mat-button class="mat-icon-button" [matMenuTriggerFor]="addressMenu" aria-label="Menue">
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #addressMenu="matMenu">
@@ -9,40 +8,47 @@
     </mat-menu>
 
 
-    <mat-card-content [routerLink]= "['/entrie/' + data.currentLocationId  + data.currentBecoloneyId + entrieCustomId]">
-        {{ entrieDate  | date:'dd/MM/yy'}} {{ entrie.description }} 
+    <mat-card-content [routerLink]="['/entrie/' + data.currentLocationId  + data.currentBecoloneyId + entrieCustomId]">
+        {{ entrieDate | date:'dd/MM/yy'}} {{ entrie.description }}
         <div>
-        
-            <table class="table">
-                <tr *ngIf="!allTasks">
-                    
-                    <th>Task-type</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                </tr>
-                <tr *ngFor="let task of allTasks" >
-                    <td class="iconTr"><img *ngIf="task.header=='Treatment'" class="small-icons" src="./assets/img/medical_4.ico" >
-                        <img *ngIf="task.header=='Feeding'" class="small-icons" src="./assets/img/feeding_1.ico" >
-                        <img *ngIf="task.header=='Harvest'" class="small-icons" src="./assets/img/comb.ico"></td>
-                    <td>{{ task.header }}</td>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.amount }}{{ task.unit }}</td>
-                </tr>
-        
-            </table>  
-            <table class="table">
-                <tr  *ngIf="!allGeneralTask">
-                    <th>Type</th>
-                    <th>Amount</th>
-                </tr>
-                <tr *ngFor="let generalEntrie of generalList; let i = index" >
-                    <td>{{ generalEntrie }}</td>
-                    <td>{{ this.dataList[i] }}</td>
-                </tr>
-        
-            </table>  
+            <mat-card-content  *ngIf="allTasks">
+                <h3>Tasks:</h3>
+                <table class="table-task tabel">
+                    <tr>
+
+                        <th>Task-type</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr *ngFor="let task of allTasks">
+                        <td class="iconTr"><img *ngIf="task.header=='Treatment'" class="small-icons"
+                                src="./assets/img/medical_4.ico">
+                            <img *ngIf="task.header=='Feeding'" class="small-icons" src="./assets/img/feeding_1.ico">
+                            <img *ngIf="task.header=='Harvest'" class="small-icons" src="./assets/img/comb.ico">
+                        </td>
+                        <td>{{ task.header }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.amount }}{{ task.unit }}</td>
+                    </tr>
+
+                </table>
+            </mat-card-content>
+            <mat-card-content *ngIf="allGeneralTask">
+                <h3>General - Tasks:</h3>
+                <table class="table">
+                    <tr >
+                        <th>Type</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr *ngFor="let generalEntrie of generalList; let i = index">
+                        <td *ngIf="this.dataList[i]!='0'">{{ generalEntrie }}</td>
+                        <td *ngIf="this.dataList[i]!='0'">{{ this.dataList[i] }}</td>
+                    </tr>
+
+                </table>
+            </mat-card-content>
         </div>
-     
+
     </mat-card-content>
 
 </mat-card>
